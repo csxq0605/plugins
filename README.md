@@ -2,6 +2,20 @@
 
 为 Claude Code 和 Nexgent 实现的 agent team 协调能力——**作为 subagent 和 workflow 的补充层**。
 
+## 安装
+
+### Claude Code
+
+```bash
+/plugin install https://github.com/csxq0605/multi-agent/tree/master/claude-code-plugin
+```
+
+### Nexgent
+
+```bash
+/plugin install https://github.com/csxq0605/multi-agent/tree/master/nexgent-plugin
+```
+
 ## 核心定位
 
 | 任务复杂度 | 方案 |

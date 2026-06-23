@@ -10,6 +10,9 @@
 ## 安装
 
 ```bash
+# 从 GitHub 安装
+/plugin install https://github.com/csxq0605/multi-agent/tree/master/claude-code-plugin
+
 # 从本地目录安装
 /plugin install team-coord@D:\tasks\project\multi-agent\claude-code-plugin
 ```

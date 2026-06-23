@@ -7,7 +7,11 @@
 ### Claude Code
 
 ```bash
-/plugin install https://github.com/csxq0605/multi-agent/tree/master/claude-code-plugin
+# 添加 marketplace
+/plugin marketplace add csxq0605/multi-agent
+
+# 安装插件
+/plugin install team-coord@multi-agent
 ```
 
 ### Nexgent

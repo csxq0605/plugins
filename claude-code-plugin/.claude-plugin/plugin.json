@@ -1,16 +1,19 @@
 {
   "name": "team-coord",
-  "description": "Agent team coordination plugin — supplements subagent/workflow with multi-agent team coordination. Lead coordinates (never does actual work), workers execute. Covers inbox sync protocol, WHAT vs HOW spawn philosophy, hub-and-spoke topology, and user-approved shutdown.",
+  "description": "Two subskills for agent team coordination — team-coord:lead orchestrates a team (pure coordinator, never does actual work), team-coord:teammate guides each worker (executes tasks, returns raw findings). Covers inbox sync protocol, WHAT vs HOW spawn philosophy, and unified report synthesis.",
   "version": "1.0.0",
   "author": {
-    "name": "multi-agent"
+    "name": "csxq0605"
   },
   "license": "MIT",
+  "homepage": "https://github.com/csxq0605/multi-agent",
+  "repository": "https://github.com/csxq0605/multi-agent",
   "keywords": [
     "team-coord",
     "multi-agent",
     "coordination",
     "claude-code",
+    "lead",
     "teammate"
   ]
 }

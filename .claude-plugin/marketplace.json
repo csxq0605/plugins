@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "multi-agent",
+  "description": "Team coordination plugin for Claude Code and Nexgent — lead/teammate subskills for multi-agent orchestration with inbox sync protocol, spawn templates, and unified report synthesis.",
+  "owner": {
+    "name": "csxq0605"
+  },
+  "plugins": [
+    {
+      "name": "team-coord",
+      "description": "Two subskills for agent team coordination — team-coord:lead orchestrates a team (pure coordinator, never does actual work), team-coord:teammate guides each worker (executes tasks, returns raw findings). Covers inbox sync protocol, WHAT vs HOW spawn philosophy, and unified report synthesis.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "productivity",
+      "source": "./claude-code-plugin"
+    }
+  ]
+}

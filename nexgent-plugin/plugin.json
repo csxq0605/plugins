@@ -1,0 +1,12 @@
+{
+  "name": "team-coord",
+  "version": "1.0.0",
+  "description": "Agent team coordination plugin for Nexgent — supplements subagent/workflow with multi-agent team coordination. Lead coordinates (never does actual work), workers execute. Covers inbox sync protocol, WHAT vs HOW spawn philosophy, hub-and-spoke topology, and user-approved shutdown.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": true,
+  "enabled": true
+}

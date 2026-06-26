@@ -1,0 +1,11 @@
+{
+  "name": "adversarial-review",
+  "version": "1.0.0",
+  "description": "Multi-perspective code review integrating security, performance, architecture, code quality, test quality, and API design analysis with unified findings format, health scoring, and iterative fix loop.",
+  "skills": [
+    {
+      "name": "adversarial-review",
+      "path": "skills/adversarial-review/SKILL.md"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "multi-agent",
-  "description": "Team coordination plugin for Claude Code and Nexgent — lead/teammate subskills for multi-agent orchestration with inbox sync protocol, spawn templates, and unified report synthesis.",
+  "name": "plugins",
+  "description": "Claude Code & Nexgent plugin collection — team coordination, multi-perspective code review, and systematic literature review.",
   "owner": {
     "name": "csxq0605"
   },
@@ -14,6 +14,24 @@
       },
       "category": "productivity",
       "source": "./multi-agent/claude-code-plugin"
+    },
+    {
+      "name": "adversarial-review",
+      "description": "Multi-perspective code review with 6 analysis lenses (security, performance, architecture, code quality, test quality, API design), unified findings format, health scoring (0-100), and iterative fix loop.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "code-quality",
+      "source": "./adversarial-review/claude-code-plugin"
+    },
+    {
+      "name": "lit-review",
+      "description": "Systematic literature review pipeline — multi-source academic search (arXiv, Semantic Scholar), citation network analysis, subtopic decomposition, and structured review synthesis.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "research",
+      "source": "./lit-review/claude-code-plugin"
     }
   ]
 }

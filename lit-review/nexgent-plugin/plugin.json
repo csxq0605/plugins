@@ -1,0 +1,12 @@
+{
+  "name": "lit-review",
+  "version": "1.0.0",
+  "description": "Systematic literature review pipeline for Nexgent — multi-source academic search, citation network analysis, and structured review synthesis.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

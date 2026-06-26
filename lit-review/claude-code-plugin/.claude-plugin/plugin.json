@@ -1,0 +1,19 @@
+{
+  "name": "lit-review",
+  "version": "1.0.0",
+  "description": "Systematic literature review pipeline — multi-source academic search (arXiv, Semantic Scholar, Google Scholar), citation network analysis, subtopic decomposition, and structured review synthesis.",
+  "skills": [
+    {
+      "name": "search",
+      "path": "skills/search/SKILL.md"
+    },
+    {
+      "name": "analyze",
+      "path": "skills/analyze/SKILL.md"
+    },
+    {
+      "name": "synthesize",
+      "path": "skills/synthesize/SKILL.md"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "adversarial-review",
+  "version": "1.0.0",
+  "description": "Multi-perspective code review plugin for Nexgent — 6 analysis lenses (security, performance, architecture, code quality, test quality, API design), unified findings format, health scoring, and iterative fix loop.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

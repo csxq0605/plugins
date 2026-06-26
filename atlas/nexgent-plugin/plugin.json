@@ -1,0 +1,12 @@
+{
+  "name": "atlas",
+  "version": "1.0.0",
+  "description": "Codebase knowledge atlas for Nexgent — multi-agent parallel exploration to map architecture, data flows, dependencies, and patterns. Generates living documentation.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

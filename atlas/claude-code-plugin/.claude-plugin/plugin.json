@@ -1,0 +1,20 @@
+{
+  "name": "atlas",
+  "description": "Codebase knowledge atlas — multi-agent parallel exploration to map architecture, data flows, dependencies, and patterns. Generates living documentation that stays in sync with code.",
+  "version": "1.0.0",
+  "author": {
+    "name": "csxq0605"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/csxq0605/plugins",
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": [
+    "atlas",
+    "codebase",
+    "architecture",
+    "documentation",
+    "knowledge-graph",
+    "exploration",
+    "multi-agent"
+  ]
+}

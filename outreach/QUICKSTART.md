@@ -5,26 +5,41 @@
 ### Claude Code 用户
 
 ```bash
-# 1. 上传你的CV
+# 1. 配置邮箱（首次使用会自动检测并引导）
+/outreach "配置邮箱"
+# 或直接运行: python scripts/email_setup.py --email your@gmail.com --password pass --preset gmail
+
+# 2. 上传你的CV
 /outreach "这是我的CV"
 
-# 2. 调研目标学校的教授
+# 3. 调研目标学校的教授
 /outreach "调研 MIT CS"
 
-# 3. 生成可视化报告
+# 4. 生成可视化报告
 /outreach "生成报告 MIT CS"
 
-# 4. 生成套磁邮件
+# 5. 生成套磁邮件
 /outreach "生成邮件 MIT CS"
+
+# 6. 发送邮件
+/outreach "发送邮件给 MIT CS Kaiming_He"
 ```
 
 ### Nexgent 用户
 
 ```python
-# 1. 解析CV
+# 1. 配置邮箱（首次使用会自动检测并引导）
+email_setup(
+    email_addr="your_name@gmail.com",
+    password="your_password",
+    name="Your Name",
+    preset="gmail"  # 可选: pku, tsinghua, gmail, outlook, qq, 163
+)
+
+# 2. 解析CV
 outreach_parse_materials(file_path="~/Documents/cv.pdf")
 
-# 2. 调研教授
+# 3. 调研教授
 outreach_research_professor(
     name="Kaiming He",
     school="MIT",
@@ -33,17 +48,30 @@ outreach_research_professor(
     research_keywords="computer vision, deep learning"
 )
 
-# 3. 生成报告
+# 4. 生成报告
 outreach_generate_report(school="MIT", dept="CS")
 
-# 4. 生成邮件
+# 5. 生成邮件
 outreach_generate_email(school="MIT", dept="CS", professor="Kaiming He")
+
+# 6. 发送邮件
+email_send(
+    to="kaiminghe@mit.edu",
+    subject="Prospective PhD Student - Your Name - Computer Vision",
+    body="[从email_draft.md复制的内容]"
+)
 ```
 
 ## 完整工作流程
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
+│  Step 0: 检查邮箱配置（自动检测）                            │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │  已配置 → 跳过                                       │    │
+│  │  未配置 → 引导配置 → 自动测试连接                    │    │
+│  └─────────────────────────────────────────────────────┘    │
+│                          ↓                                  │
 │  Step 1: 上传材料                                            │
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │  CV.pdf / research_plan.md / transcripts.pdf        │    │
@@ -73,6 +101,11 @@ outreach_generate_email(school="MIT", dept="CS", professor="Kaiming He")
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │  个性化邮件草稿（基于调研报告）                       │    │
 │  └─────────────────────────────────────────────────────┘    │
+│                          ↓                                  │
+│  Step 7: 发送邮件                                            │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │  试运行 → 确认 → 正式发送 → 记录日志                 │    │
+│  └─────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -82,7 +115,12 @@ outreach_generate_email(school="MIT", dept="CS", professor="Kaiming He")
 ```
 plugins/outreach/claude-code-plugin/
 ├── skills/outreach/SKILL.md    # Skill定义
-├── scripts/pipeline.py         # 自动化脚本
+├── scripts/
+│   ├── pipeline.py             # 调研自动化脚本
+│   ├── email_setup.py          # 邮箱配置脚本
+│   ├── email_send.py           # 邮件发送脚本
+│   ├── email_batch.py          # 批量发送脚本
+│   └── email_list.py           # 邮件查看脚本
 └── templates/                  # 报告模板
 ```
 
@@ -116,12 +154,18 @@ plugins/outreach/nexgent-plugin/
 
 | 命令 | 说明 |
 |------|------|
+| `/outreach "配置邮箱"` | 配置邮箱（自动测试连接） |
+| `/outreach "查看邮箱配置"` | 查看当前邮箱配置 |
+| `/outreach "测试邮箱"` | 测试邮箱连接 |
 | `/outreach "这是我的CV"` | 上传材料 |
 | `/outreach "调研 MIT CS"` | 调研教授 |
 | `/outreach "调研 MIT CS --direction AI"` | 按方向调研 |
 | `/outreach "生成报告 MIT CS"` | 生成HTML报告 |
 | `/outreach "生成邮件 MIT CS"` | 生成邮件草稿 |
 | `/outreach "查看 MIT CS Prof_Name"` | 查看调研结果 |
+| `/outreach "发送邮件给 MIT CS Prof_Name"` | 发送套磁邮件 |
+| `/outreach "批量发送 MIT CS"` | 批量发送邮件 |
+| `/outreach "查看收件箱"` | 查看邮件列表 |
 
 ### Nexgent
 

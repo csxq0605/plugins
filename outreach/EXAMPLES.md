@@ -1,27 +1,34 @@
 # 🎓 Outreach Plugin — 使用示例
 
+## ⚠️ 首次使用必读
+
+**使用此插件前，必须先配置邮箱。插件会在用户首次使用时主动询问并引导配置。**
+
 ## Claude Code 使用示例
 
-### 示例 1：上传材料并调研
+### 示例 1：首次使用完整流程
 
 ```bash
-# 1. 上传你的CV
+# 1. 配置邮箱（首次使用必须）
+/outreach "配置邮箱"
+
+# 2. 上传你的CV
 /outreach "这是我的CV，请帮我调研MIT CS的教授"
 
-# 2. 查看已解析的材料
+# 3. 查看已解析的材料
 /outreach "查看我的材料"
 
-# 3. 调研特定方向的教授
+# 4. 调研特定方向的教授
 /outreach "调研 MIT CS 的 AI 方向教授"
 
-# 4. 生成报告
+# 5. 生成报告
 /outreach "生成报告 MIT CS"
 
-# 5. 为所有教授生成邮件
+# 6. 为所有教授生成邮件
 /outreach "生成邮件 MIT CS"
 
-# 6. 查看特定教授的调研结果
-/outreach "查看 MIT CS Kaiming_He"
+# 7. 发送邮件
+/outreach "发送邮件给 MIT CS Kaiming_He"
 ```
 
 ### 示例 2：使用CSV文件
@@ -51,18 +58,25 @@
 
 ## Nexgent 使用示例
 
-### 示例 1：基本工作流
+### 示例 1：首次使用完整流程
 
 ```python
-# 1. 解析CV
+# 1. 配置邮箱（首次使用必须）
+email_setup(
+    email_addr="your_name@stu.pku.edu.cn",
+    password="your_password",
+    name="Your Name"
+)
+
+# 2. 解析CV
 result = outreach_parse_materials(file_path="~/Documents/cv.pdf")
 print(result)
 
-# 2. 查看已解析材料
+# 3. 查看已解析材料
 profiles = outreach_list_profiles()
 print(profiles)
 
-# 3. 调研教授
+# 4. 调研教授
 result = outreach_research_professor(
     name="Kaiming He",
     school="MIT",
@@ -73,7 +87,7 @@ result = outreach_research_professor(
 )
 print(result)
 
-# 4. 获取调研报告
+# 5. 获取调研报告
 research = outreach_get_research(
     school="MIT",
     dept="CS",
@@ -81,17 +95,24 @@ research = outreach_get_research(
 )
 print(research)
 
-# 5. 生成HTML报告
+# 6. 生成HTML报告
 report = outreach_generate_report(school="MIT", dept="CS")
 print(report)
 
-# 6. 生成邮件
+# 7. 生成邮件
 email = outreach_generate_email(
     school="MIT",
     dept="CS",
     professor="Kaiming He"
 )
 print(email)
+
+# 8. 发送邮件
+email_send(
+    to="kaiminghe@mit.edu",
+    subject="Prospective PhD Student - Your Name - Computer Vision",
+    body="[从email_draft.md复制的内容]"
+)
 ```
 
 ### 示例 2：批量调研

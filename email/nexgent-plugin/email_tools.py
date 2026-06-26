@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Email Tools for Outreach Plugin
+Email Tools - 独立邮件插件
 基于 IMAP/SMTP 协议的邮件收发工具
 """
 
@@ -17,8 +17,8 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any
 
 # 配置文件路径
-CONFIG_DIR = Path.home() / ".outreach"
-CONFIG_FILE = CONFIG_DIR / "email_config.json"
+CONFIG_DIR = Path.home() / ".email"
+CONFIG_FILE = CONFIG_DIR / "config.json"
 LOGS_DIR = CONFIG_DIR / "logs"
 
 # 确保目录存在
@@ -90,8 +90,48 @@ def _load_config() -> Optional[Dict[str, str]]:
 
 def _save_config(config: Dict[str, str]):
     """保存邮件配置"""
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with open(CONFIG_FILE, "w", encoding="utf-8") as f:
         json.dump(config, f, indent=2, ensure_ascii=False)
+
+
+def _test_connection(config: Dict[str, str]) -> Dict[str, Any]:
+    """测试邮件服务器连接"""
+    errors = []
+
+    # 测试 IMAP
+    try:
+        imap = imaplib.IMAP4_SSL(config["imap_server"], config["imap_port"])
+        imap.login(config["email"], config["password"])
+        imap.logout()
+    except imaplib.IMAP4.error as e:
+        errors.append(f"IMAP login failed: {str(e)}")
+    except Exception as e:
+        errors.append(f"IMAP connection failed: {str(e)}")
+
+    # 测试 SMTP
+    try:
+        if config["smtp_port"] == 587:
+            smtp = smtplib.SMTP(config["smtp_server"], config["smtp_port"])
+            smtp.starttls()
+        else:
+            smtp = smtplib.SMTP_SSL(config["smtp_server"], config["smtp_port"])
+        smtp.login(config["email"], config["password"])
+        smtp.quit()
+    except smtplib.SMTPAuthenticationError as e:
+        errors.append(f"SMTP login failed: {str(e)}")
+    except Exception as e:
+        errors.append(f"SMTP connection failed: {str(e)}")
+
+    if errors:
+        return {
+            "success": False,
+            "error": "Email connection test failed",
+            "details": errors,
+            "suggestion": "Please check:\n1. Email address and password are correct\n2. Gmail/QQ mail need app-specific password\n3. Server address and port are correct"
+        }
+
+    return {"success": True}
 
 
 def email_is_configured() -> Dict[str, Any]:
@@ -159,7 +199,7 @@ def email_setup(
         domain = email_addr.split("@")[1] if "@" in email_addr else ""
         preset = None
         for key, val in EMAIL_PRESETS.items():
-            if key != "custom" and domain in val.get("name", ""):
+            if key != "custom" and domain in key:
                 preset = key
                 server_config = val.copy()
                 break
@@ -197,7 +237,7 @@ def email_setup(
 
     return {
         "success": True,
-        "message": f"邮箱配置成功: {email_addr}",
+        "message": f"Email configured successfully: {email_addr}",
         "config": {
             "email": email_addr,
             "name": config["name"],
@@ -207,45 +247,6 @@ def email_setup(
             "smtp_port": config["smtp_port"]
         }
     }
-
-
-def _test_connection(config: Dict[str, str]) -> Dict[str, Any]:
-    """测试邮件服务器连接"""
-    errors = []
-
-    # 测试 IMAP
-    try:
-        imap = imaplib.IMAP4_SSL(config["imap_server"], config["imap_port"])
-        imap.login(config["email"], config["password"])
-        imap.logout()
-    except imaplib.IMAP4.error as e:
-        errors.append(f"IMAP 登录失败: {str(e)}")
-    except Exception as e:
-        errors.append(f"IMAP 连接失败: {str(e)}")
-
-    # 测试 SMTP
-    try:
-        if config["smtp_port"] == 587:
-            smtp = smtplib.SMTP(config["smtp_server"], config["smtp_port"])
-            smtp.starttls()
-        else:
-            smtp = smtplib.SMTP_SSL(config["smtp_server"], config["smtp_port"])
-        smtp.login(config["email"], config["password"])
-        smtp.quit()
-    except smtplib.SMTPAuthenticationError as e:
-        errors.append(f"SMTP 登录失败: {str(e)}")
-    except Exception as e:
-        errors.append(f"SMTP 连接失败: {str(e)}")
-
-    if errors:
-        return {
-            "success": False,
-            "error": "邮箱连接测试失败",
-            "details": errors,
-            "suggestion": "请检查：\n1. 邮箱地址和密码是否正确\n2. 是否需要使用应用专用密码（Gmail、QQ邮箱等需要）\n3. 服务器地址和端口是否正确"
-        }
-
-    return {"success": True}
 
 
 def email_test() -> Dict[str, Any]:
@@ -259,7 +260,7 @@ def email_test() -> Dict[str, Any]:
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     return _test_connection(config)
@@ -276,7 +277,7 @@ def email_get_config() -> Dict[str, Any]:
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     return {
@@ -289,7 +290,7 @@ def email_get_config() -> Dict[str, Any]:
             "imap_port": config["imap_port"],
             "smtp_server": config["smtp_server"],
             "smtp_port": config["smtp_port"],
-            "password": "***已配置***"
+            "password": "***configured***"
         }
     }
 
@@ -322,14 +323,14 @@ def email_send(
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     if dry_run:
         return {
             "success": True,
             "dry_run": True,
-            "message": "试运行模式，邮件未实际发送",
+            "message": "Dry run mode, email not sent",
             "preview": {
                 "from": f"{config['name']} <{config['email']}>",
                 "to": to,
@@ -377,11 +378,11 @@ def email_send(
         smtp.quit()
 
         # 记录日志
-        _log_email(to, subject, body, True, "发送成功")
+        _log_email(to, subject, body, True, "Sent successfully")
 
         return {
             "success": True,
-            "message": f"邮件已发送给 {to}",
+            "message": f"Email sent to {to}",
             "details": {
                 "from": config["email"],
                 "to": to,
@@ -395,7 +396,7 @@ def email_send(
 
         return {
             "success": False,
-            "error": f"发送失败: {str(e)}"
+            "error": f"Failed to send: {str(e)}"
         }
 
 
@@ -425,7 +426,7 @@ def email_send_batch(
     }
 
     for i, mail in enumerate(emails, 1):
-        print(f"[{i}/{len(emails)}] 发送给 {mail['to']}...")
+        print(f"[{i}/{len(emails)}] Sending to {mail['to']}...")
 
         result = email_send(
             to=mail["to"],
@@ -448,7 +449,7 @@ def email_send_batch(
 
         # 间隔等待
         if i < len(emails) and not dry_run:
-            print(f"  等待 {delay} 秒...")
+            print(f"  Waiting {delay} seconds...")
             time.sleep(delay)
 
     return results
@@ -474,7 +475,7 @@ def email_list(
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     try:
@@ -492,7 +493,7 @@ def email_list(
             status, messages = imap.search(None, "ALL")
 
         if status != "OK":
-            return {"success": False, "error": "搜索邮件失败"}
+            return {"success": False, "error": "Failed to search emails"}
 
         # 获取邮件ID列表
         email_ids = messages[0].split()
@@ -561,7 +562,7 @@ def email_list(
     except Exception as e:
         return {
             "success": False,
-            "error": f"获取邮件失败: {str(e)}"
+            "error": f"Failed to get emails: {str(e)}"
         }
 
 
@@ -580,7 +581,7 @@ def email_read(email_id: str, folder: str = "INBOX") -> Dict[str, Any]:
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     try:
@@ -594,7 +595,7 @@ def email_read(email_id: str, folder: str = "INBOX") -> Dict[str, Any]:
         # 获取邮件
         status, msg_data = imap.fetch(email_id.encode(), "(RFC822)")
         if status != "OK":
-            return {"success": False, "error": "获取邮件失败"}
+            return {"success": False, "error": "Failed to get email"}
 
         # 解析邮件
         raw_email = msg_data[0][1]
@@ -646,7 +647,7 @@ def email_read(email_id: str, folder: str = "INBOX") -> Dict[str, Any]:
     except Exception as e:
         return {
             "success": False,
-            "error": f"读取邮件失败: {str(e)}"
+            "error": f"Failed to read email: {str(e)}"
         }
 
 
@@ -686,7 +687,7 @@ def email_search(
     if not config:
         return {
             "success": False,
-            "error": "未配置邮箱，请先使用 email_setup 配置"
+            "error": "Email not configured, please use email_setup first"
         }
 
     try:
@@ -697,7 +698,7 @@ def email_search(
         # 选择文件夹
         imap.select(folder)
 
-        # 搜索邮件（主题或正文包含关键词）
+        # 搜索邮件
         status, messages = imap.search(None, f'(OR SUBJECT "{query}" BODY "{query}")')
 
         if status != "OK":
@@ -705,7 +706,7 @@ def email_search(
             status, messages = imap.search(None, f'SUBJECT "{query}"')
 
         if status != "OK":
-            return {"success": False, "error": "搜索失败"}
+            return {"success": False, "error": "Search failed"}
 
         # 获取邮件ID列表
         email_ids = messages[0].split()
@@ -755,5 +756,5 @@ def email_search(
     except Exception as e:
         return {
             "success": False,
-            "error": f"搜索失败: {str(e)}"
+            "error": f"Search failed: {str(e)}"
         }

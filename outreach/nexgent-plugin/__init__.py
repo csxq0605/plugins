@@ -14,7 +14,10 @@ from .outreach_tools import (
 )
 
 from .email_tools import (
+    email_is_configured,
+    email_get_presets,
     email_setup,
+    email_test,
     email_get_config,
     email_send,
     email_send_batch,
@@ -33,7 +36,10 @@ __all__ = [
     "outreach_generate_email",
     "outreach_list_professors",
     # Email tools
+    "email_is_configured",
+    "email_get_presets",
     "email_setup",
+    "email_test",
     "email_get_config",
     "email_send",
     "email_send_batch",

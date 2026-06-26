@@ -1,0 +1,19 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "description": "独立邮件收发插件 — 基于 IMAP/SMTP 协议的完整邮件功能",
+  "author": "OpenClaw",
+  "tools": [
+    "email_is_configured",
+    "email_get_presets",
+    "email_setup",
+    "email_test",
+    "email_get_config",
+    "email_send",
+    "email_send_batch",
+    "email_list",
+    "email_read",
+    "email_search"
+  ],
+  "skills": ["skills/email"]
+}

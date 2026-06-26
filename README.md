@@ -1,6 +1,6 @@
 # Claude Code & Nexgent Plugins
 
-4 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
+7 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
 
 ## Plugins
 
@@ -28,6 +28,24 @@
 - **Claude Code**: `multi-agent/claude-code-plugin/`
 - **Nexgent**: `multi-agent/nexgent-plugin/`
 
+### atlas
+代码库知识图谱。多 Agent 并行探索代码库，生成架构文档、数据流图、依赖分析，构建活的知识地图。
+
+- **Claude Code**: `atlas/claude-code-plugin/`
+- **Nexgent**: `atlas/nexgent-plugin/`
+
+### incident-response
+生产事故响应。结构化事故处理：分诊 → 定位 → 修复 → 验证 → 复盘。时间线追踪、根因分析、事后报告自动生成。
+
+- **Claude Code**: `incident-response/claude-code-plugin/`
+- **Nexgent**: `incident-response/nexgent-plugin/`
+
+### migrator
+框架/库迁移助手。分析代码库 → 识别所有触点 → 生成迁移计划 → 逐步执行 → 每步验证。处理 breaking changes 和废弃 API。
+
+- **Claude Code**: `migrator/claude-code-plugin/`
+- **Nexgent**: `migrator/nexgent-plugin/`
+
 ## 安装
 
 ### Claude Code
@@ -51,9 +69,18 @@ claude install-plugin github:csxq0605/plugins
 
 # 多 agent 协调
 /plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
+
+# 代码库知识图谱
+/plugin install https://github.com/csxq0605/plugins/tree/master/atlas/nexgent-plugin
+
+# 生产事故响应
+/plugin install https://github.com/csxq0605/plugins/tree/master/incident-response/nexgent-plugin
+
+# 框架迁移助手
+/plugin install https://github.com/csxq0605/plugins/tree/master/migrator/nexgent-plugin
 ```
 
-## 为什么是 4 个而不是 8 个？
+## 设计理念
 
 之前的结构：project-onboarding, dep-audit, adversarial-review, changelog-gen, adr-generator, session-memory, lit-review, team-coord — 8 个碎片插件。
 
@@ -64,6 +91,9 @@ claude install-plugin github:csxq0605/plugins
 - **research** = 独立的学术研究场景
 - **outreach** = 独立的学术套磁场景
 - **multi-agent** = 协调层
+- **atlas** = 代码库知识图谱（新人入职、重构前分析、架构文档）
+- **incident-response** = 生产事故响应（分诊、定位、修复、复盘）
+- **migrator** = 框架迁移助手（分析、计划、执行、验证）
 
 ## Semantic Scholar API
 

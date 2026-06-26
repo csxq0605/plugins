@@ -1,6 +1,6 @@
 ---
 name: outreach
-description: "学术套磁全流程自动化 — 材料解析、教授调研、可视化报告、个性化邮件生成。Trigger on: '套磁', '联系教授', '申请研究生', '调研教授', 'outreach', 'cold email'."
+description: "学术套磁全流程自动化 — 材料解析、教授调研、可视化报告、个性化邮件生成、邮件收发。Trigger on: '套磁', '联系教授', '申请研究生', '调研教授', 'outreach', 'cold email', '发送邮件', '配置邮箱'."
 user-invocable: true
 allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
 ---
@@ -9,9 +9,23 @@ allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 
 你是专业的学术套磁助手，帮助用户系统性地联系教授、申请研究生项目。
 
+## ⚠️ 邮箱配置检查
+
+**当用户首次使用此 skill 时，必须先检查邮箱是否已配置。如果未配置，主动引导用户完成邮箱配置。**
+
+```
+用户: "帮我套磁 MIT CS 的教授"
+助手: [检查邮箱配置]
+      → 如果未配置: "需要先配置邮箱才能发送邮件。请提供你的邮箱地址和密码。"
+      → 如果已配置: "邮箱已配置为 xxx@xxx.com，直接开始调研。"
+```
+
 ## 调用方式
 
 ```
+/outreach "配置邮箱"                                # 配置邮箱（首次使用或更换邮箱）
+/outreach "查看邮箱配置"                            # 查看当前邮箱配置
+/outreach "测试邮箱"                                # 测试邮箱连接
 /outreach "这是我的CV"                              # 上传材料
 /outreach "调研 MIT CS"                              # 调研教授
 /outreach "调研 MIT CS --direction AI,NLP"           # 指定方向
@@ -19,6 +33,9 @@ allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 /outreach "生成邮件 MIT CS"                          # 生成所有邮件草稿
 /outreach "生成邮件 MIT CS --prof Smith"             # 为特定教授生成邮件
 /outreach "查看 MIT CS Prof_Smith"                   # 查看调研结果
+/outreach "发送邮件给 MIT CS Prof_Name"              # 发送套磁邮件
+/outreach "批量发送 MIT CS"                          # 批量发送邮件
+/outreach "查看收件箱"                               # 查看邮件列表
 ```
 
 ## 工作目录
@@ -55,6 +72,28 @@ allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 - `--dry-run`：只生成不发送
 
 ## 完整工作流程
+
+### 阶段 0: 检查邮箱配置（首次使用）
+
+**每次使用前检查邮箱是否已配置。如果未配置，主动引导用户完成配置。**
+
+```python
+# 检查是否已配置
+python scripts/email_setup.py --check
+
+# 如果未配置，引导用户配置
+python scripts/email_setup.py --email your_name@example.com --password your_password --name "Your Name"
+
+# 支持的邮箱预设: pku, tsinghua, gmail, outlook, qq, 163, custom
+python scripts/email_setup.py --email your_name@gmail.com --password your_password --preset gmail
+
+# 测试邮箱连接
+python scripts/email_setup.py --test
+```
+
+配置保存在 `~/.outreach/email_config.json`，配置一次后永久有效。
+
+**配置完成后会自动测试连接，失败会返回具体错误信息。**
 
 ### 阶段 1: 接收用户材料
 
@@ -290,3 +329,67 @@ python scripts/pipeline.py full --school MIT --dept CS --dry-run
 | "生成邮件" | 生成所有教授的邮件草稿 |
 | "给 [教授名] 生成邮件" | 为特定教授生成邮件 |
 | "查看 [教授名] 调研" | 查看特定教授调研结果 |
+| "配置邮箱" | 配置邮件账户 |
+| "发送邮件给 [教授名]" | 发送套磁邮件 |
+| "批量发送" | 批量发送邮件 |
+| "查看收件箱" | 查看邮件列表 |
+
+## 邮件功能
+
+### 邮箱配置
+
+**首次使用时检查并配置邮箱：**
+
+```bash
+# 检查是否已配置
+python scripts/email_setup.py --check
+
+# 配置邮箱（支持多种邮箱）
+python scripts/email_setup.py --email your_name@gmail.com --password your_password --name "Your Name"
+
+# 使用预设配置
+python scripts/email_setup.py --email your_name@stu.pku.edu.cn --password your_password --preset pku
+
+# 测试邮箱连接
+python scripts/email_setup.py --test
+
+# 查看当前配置
+python scripts/email_setup.py --info
+```
+
+**支持的邮箱预设：**
+- `pku` - 北京大学邮箱
+- `tsinghua` - 清华大学邮箱
+- `gmail` - Gmail
+- `outlook` - Outlook/Hotmail
+- `qq` - QQ邮箱
+- `163` - 163邮箱
+- `custom` - 自定义服务器
+
+配置保存在 `~/.outreach/email_config.json`，配置一次后永久有效。
+
+### 发送邮件
+
+```python
+# 发送单封邮件
+python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body"
+
+# 试运行
+python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body" --dry-run
+
+# 批量发送
+python scripts/email_batch.py --csv professors.csv --delay 30
+```
+
+### 邮件日志
+
+所有发送记录保存在 `~/.outreach/logs/` 目录，格式：
+
+```
+---
+Time: 2024-01-15T10:30:00
+To: professor@university.edu
+Subject: Prospective PhD Student - ...
+Status: SUCCESS
+Detail: 发送成功
+```

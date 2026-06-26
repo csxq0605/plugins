@@ -2,13 +2,31 @@
 
 一套完整的学术套磁自动化工具，支持 Claude Code 和 Nexgent 两个平台。
 
+## ⚠️ 邮箱配置检查
+
+**使用此插件前，会自动检查邮箱是否已配置。如果未配置，会主动引导用户完成配置。配置一次后永久有效。**
+
 ## 功能特性
 
+- 📧 **邮箱配置**：自动检测并引导配置，支持多种邮箱，配置后自动测试连接
 - 📄 **材料解析**：自动解析 CV、研究计划、成绩单等材料
 - 🔍 **教授调研**：深度调研教授的研究方向、发表统计、学生去向、导师风格
 - 📊 **可视化报告**：生成交互式 HTML 报告，支持搜索、排序、筛选
 - ✉️ **邮件生成**：基于调研报告生成个性化套磁邮件
 - 🎯 **匹配度分析**：自动评估与教授的研究方向匹配度
+- 📬 **邮件收发**：基于 IMAP/SMTP 协议的完整邮件功能
+
+## 支持的邮箱
+
+| 邮箱 | 预设 | 说明 |
+|------|------|------|
+| 北京大学 | `pku` | mail.stu.pku.edu.cn |
+| 清华大学 | `tsinghua` | mail.tsinghua.edu.cn |
+| Gmail | `gmail` | 需要应用专用密码 |
+| Outlook | `outlook` | outlook.office365.com |
+| QQ邮箱 | `qq` | 需要应用专用密码 |
+| 163邮箱 | `163` | 需要开启IMAP/SMTP |
+| 自定义 | `custom` | 自己指定服务器 |
 
 ## 平台支持
 
@@ -134,12 +152,134 @@ Best regards,
 5. RateMyProfessor → 学生评价
 6. OpenReview → 审稿风格
 
+## 邮件功能
+
+### 邮箱配置
+
+**插件会自动检测邮箱是否已配置。如果未配置，会引导用户完成配置。配置一次后永久有效。**
+
+#### Claude Code
+```bash
+# 检查是否已配置
+python scripts/email_setup.py --check
+
+# 配置邮箱（自动测试连接）
+python scripts/email_setup.py --email your_name@gmail.com --password your_password --name "Your Name"
+
+# 使用预设配置
+python scripts/email_setup.py --email your_name@stu.pku.edu.cn --password your_password --preset pku
+
+# 测试邮箱连接
+python scripts/email_setup.py --test
+
+# 查看当前配置
+python scripts/email_setup.py --info
+```
+
+#### Nexgent
+```python
+# 检查是否已配置
+result = email_is_configured()
+
+# 获取支持的预设
+email_get_presets()
+
+# 配置邮箱（自动测试连接）
+email_setup(
+    email_addr="your_name@gmail.com",
+    password="your_password",
+    name="Your Name",
+    preset="gmail"  # 可选，自动检测
+)
+
+# 测试邮箱连接
+email_test()
+
+# 查看当前配置
+email_get_config()
+```
+
+### 发送邮件
+
+#### Claude Code
+```bash
+# 发送单封邮件
+python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body"
+
+# 试运行
+python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body" --dry-run
+
+# 批量发送
+python scripts/email_batch.py --csv professors.csv --delay 30 --dry-run
+python scripts/email_batch.py --csv professors.csv --delay 30
+```
+
+#### Nexgent
+```python
+# 发送单封邮件
+email_send(
+    to="professor@university.edu",
+    subject="Subject",
+    body="Body"
+)
+
+# 批量发送
+emails = [
+    {"to": "prof1@uni.edu", "subject": "Subject 1", "body": "Body 1"},
+    {"to": "prof2@uni.edu", "subject": "Subject 2", "body": "Body 2"},
+]
+email_send_batch(emails=emails, delay=30)
+```
+
+### 查看邮件
+
+#### Claude Code
+```bash
+# 查看收件箱
+python scripts/email_list.py --limit 20
+
+# 只看未读
+python scripts/email_list.py --unread
+
+# 搜索邮件
+python scripts/email_list.py --search "PhD"
+
+# 读取邮件
+python scripts/email_list.py --read 123
+```
+
+#### Nexgent
+```python
+# 列出邮件
+email_list(folder="INBOX", limit=20)
+
+# 搜索邮件
+email_search(query="PhD", folder="INBOX")
+
+# 读取邮件
+email_read(email_id="123", folder="INBOX")
+```
+
+### 邮件日志
+
+所有发送记录保存在 `~/.outreach/logs/` 目录，格式：
+
+```
+---
+Time: 2024-01-15T10:30:00
+To: professor@university.edu
+Subject: Prospective PhD Student - ...
+Status: SUCCESS
+Detail: 发送成功
+```
+
 ## 注意事项
 
 1. **隐私保护**：用户的 CV、成绩等个人信息仅用于邮件生成，不对外分享
 2. **频率控制**：批量调研时每请求间隔 3-5 秒，避免被封
 3. **数据准确性**：调研数据来自公开来源，标注信息来源和置信度
 4. **缓存利用**：已调研的教授不会重复调研，除非用户要求更新
+5. **邮件安全**：批量发送时每封间隔 30 秒，避免被标记为垃圾邮件
 
 ## 快速开始
 

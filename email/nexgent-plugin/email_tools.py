@@ -16,12 +16,22 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
-# 配置文件路径
+# 配置文件路径 (用户级配置，放在 ~/.email/)
 CONFIG_DIR = Path.home() / ".email"
 CONFIG_FILE = CONFIG_DIR / "config.json"
-LOGS_DIR = CONFIG_DIR / "logs"
 
-# 确保目录存在
+# 日志默认放在当前目录/.email/logs/ (项目级)
+# 可通过 path 参数指定其他位置
+DEFAULT_LOGS_DIR = Path.cwd() / ".email" / "logs"
+
+def get_logs_dir(path=None):
+    """获取日志目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".email" / "logs"
+    return DEFAULT_LOGS_DIR
+
+# 初始化日志目录
+LOGS_DIR = DEFAULT_LOGS_DIR
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 # 常见邮箱服务器配置
@@ -302,7 +312,8 @@ def email_send(
     cc: str = None,
     bcc: str = None,
     html: bool = False,
-    dry_run: bool = False
+    dry_run: bool = False,
+    path: str = None
 ) -> Dict[str, Any]:
     """
     发送邮件
@@ -315,6 +326,7 @@ def email_send(
         bcc: 密送（可选，多个用逗号分隔）
         html: 是否为HTML格式
         dry_run: 试运行模式（不实际发送）
+        path: 项目根路径，日志将存储在 <path>/.email/logs/
 
     Returns:
         发送结果
@@ -379,7 +391,7 @@ def email_send(
         smtp.quit()
 
         # 记录日志
-        _log_email(to, subject, body, True, "Sent successfully")
+        _log_email(to, subject, body, True, "Sent successfully", path)
 
         return {
             "success": True,
@@ -393,7 +405,7 @@ def email_send(
         }
     except Exception as e:
         # 记录失败日志
-        _log_email(to, subject, body, False, str(e))
+        _log_email(to, subject, body, False, str(e), path)
 
         return {
             "success": False,
@@ -404,7 +416,8 @@ def email_send(
 def email_send_batch(
     emails: List[Dict[str, str]],
     delay: int = 30,
-    dry_run: bool = False
+    dry_run: bool = False,
+    path: str = None
 ) -> Dict[str, Any]:
     """
     批量发送邮件
@@ -413,6 +426,7 @@ def email_send_batch(
         emails: 邮件列表，每项包含 to, subject, body
         delay: 每封邮件间隔秒数
         dry_run: 试运行模式
+        path: 项目根路径，日志将存储在 <path>/.email/logs/
 
     Returns:
         批量发送结果
@@ -433,7 +447,8 @@ def email_send_batch(
             to=mail["to"],
             subject=mail["subject"],
             body=mail["body"],
-            dry_run=dry_run
+            dry_run=dry_run,
+            path=path
         )
 
         if result["success"]:
@@ -652,9 +667,11 @@ def email_read(email_id: str, folder: str = "INBOX") -> Dict[str, Any]:
         }
 
 
-def _log_email(to: str, subject: str, body: str, success: bool, detail: str):
+def _log_email(to: str, subject: str, body: str, success: bool, detail: str, path: str = None):
     """记录邮件发送日志"""
-    log_file = LOGS_DIR / f"{datetime.now().strftime('%Y-%m-%d')}.log"
+    logs_dir = get_logs_dir(path)
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    log_file = logs_dir / f"{datetime.now().strftime('%Y-%m-%d')}.log"
     status = "SUCCESS" if success else "FAILED"
     entry = f"""
 ---

@@ -226,18 +226,29 @@ def get_recommendations(paper_ids, max_results=10):
     fields = "title,abstract,year,citationCount,authors,url"
     ids = ",".join(paper_ids)
     data = _s2_req(f"{S2_REC}/papers?positivePaperIds={ids}&limit={max_results}&fields={fields}")
-    if "error" in data:
-        return data
+    if data and "error" not in data:
+        papers = []
+        for p in data.get("recommendedPapers", []):
+            papers.append({
+                "paper_id": p.get("paperId", ""), "title": p.get("title", ""),
+                "year": p.get("year", 0), "abstract": (p.get("abstract") or "")[:500],
+                "citations": p.get("citationCount", 0),
+                "authors": [a.get("name", "") for a in p.get("authors", [])],
+                "url": p.get("url", ""),
+            })
+        return {"count": len(papers), "papers": papers}
+    # Fallback: return references of seed papers
+    seen = set()
     papers = []
-    for p in data.get("recommendedPapers", []):
-        papers.append({
-            "paper_id": p.get("paperId", ""), "title": p.get("title", ""),
-            "year": p.get("year", 0), "abstract": (p.get("abstract") or "")[:500],
-            "citations": p.get("citationCount", 0),
-            "authors": [a.get("name", "") for a in p.get("authors", [])],
-            "url": p.get("url", ""),
-        })
-    return {"count": len(papers), "papers": papers}
+    for pid in paper_ids:
+        refs = get_references(pid, max_results=max_results)
+        for p in refs.get("papers", []):
+            if p["paper_id"] not in seen:
+                seen.add(p["paper_id"])
+                papers.append(p)
+    papers.sort(key=lambda p: p.get("citations", 0), reverse=True)
+    return {"count": len(papers[:max_results]), "papers": papers[:max_results],
+            "note": "Recommendations API unavailable; returning references instead."}
 
 
 def search_multi(query, sources, max_results=10, year="", categories="", min_citations=0):

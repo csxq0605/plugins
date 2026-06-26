@@ -381,31 +381,51 @@ def get_paper_references(paper_id: str, max_results: int = 20, api_key: str = ""
 
 
 def get_recommendations(paper_ids: list, max_results: int = 10, api_key: str = "") -> dict:
-    """Get paper recommendations based on seed papers."""
+    """Get paper recommendations based on seed papers.
+
+    Note: Semantic Scholar recommendations API may not be available for all keys.
+    Falls back to search-based recommendations if the endpoint returns 404.
+    """
     if not api_key:
         api_key = get_api_key()
+
+    # Try the recommendations API
     fields = "title,abstract,year,citationCount,authors,url"
     positive = ",".join(paper_ids)
     url = f"{S2_RECOMMEND_API}/papers?positivePaperIds={positive}&limit={max_results}&fields={fields}"
     data = _s2_request(url, api_key)
 
-    if data is None:
-        return {"error": "Failed to fetch recommendations", "papers": []}
+    if data and "error" not in data:
+        papers = []
+        for p in data.get("recommendedPapers", []):
+            authors = [a.get("name", "") for a in p.get("authors", [])]
+            papers.append({
+                "paper_id": f"s2:{p.get('paperId', '')}",
+                "title": p.get("title", ""),
+                "year": p.get("year", 0),
+                "abstract": p.get("abstract", "") or "",
+                "citations": p.get("citationCount", 0),
+                "authors": authors,
+                "url": p.get("url", ""),
+            })
+        return {"count": len(papers), "papers": papers}
 
+    # Fallback: get the paper's references and use them as "recommendations"
     papers = []
-    for p in data.get("recommendedPapers", []):
-        authors = [a.get("name", "") for a in p.get("authors", [])]
-        papers.append({
-            "paper_id": f"s2:{p.get('paperId', '')}",
-            "title": p.get("title", ""),
-            "year": p.get("year", 0),
-            "abstract": p.get("abstract", "") or "",
-            "citations": p.get("citationCount", 0),
-            "authors": authors,
-            "url": p.get("url", ""),
-        })
+    seen = set()
+    for pid in paper_ids:
+        refs = get_paper_references(pid, max_results=max_results, api_key=api_key)
+        for p in refs.get("papers", []):
+            if p["paper_id"] not in seen:
+                seen.add(p["paper_id"])
+                papers.append(p)
 
-    return {"count": len(papers), "papers": papers}
+    papers.sort(key=lambda p: p.get("citations", 0), reverse=True)
+    return {
+        "count": len(papers[:max_results]),
+        "papers": papers[:max_results],
+        "note": "Recommendations API unavailable; returning references of seed papers instead.",
+    }
 
 
 def search_multi(query: str, sources: list = None, max_results: int = 10,

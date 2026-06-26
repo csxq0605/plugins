@@ -1,0 +1,19 @@
+{
+  "name": "migrator",
+  "description": "Framework and library migration assistant — analyze codebase, identify migration targets, generate step-by-step plans, execute with verification at each step. Handles breaking changes, deprecated APIs, and version upgrades.",
+  "version": "1.0.0",
+  "author": {
+    "name": "csxq0605"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/csxq0605/plugins",
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": [
+    "migrator",
+    "migration",
+    "upgrade",
+    "breaking-changes",
+    "deprecated",
+    "refactor"
+  ]
+}

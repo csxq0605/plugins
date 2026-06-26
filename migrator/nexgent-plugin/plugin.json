@@ -1,0 +1,12 @@
+{
+  "name": "migrator",
+  "version": "1.0.0",
+  "description": "Framework and library migration assistant for Nexgent — analyze codebase, generate migration plans, execute step by step with verification.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

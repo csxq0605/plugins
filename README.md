@@ -1,6 +1,6 @@
 # Claude Code & Nexgent Plugins
 
-7 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
+8 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
 
 > **设计原则：** 每个插件解决一个完整的工作流，而不是一个原子操作。真实开发场景是一个 PR 流程里你需要 audit + review + changelog + ADR，不是一个一个手动调。
 
@@ -11,6 +11,7 @@
 | [dev-flow](#dev-flow) | 开发工作流 | ✅ | ✅ |
 | [research](#research) | 学术研究 | ✅ | ✅ |
 | [outreach](#outreach) | 学术套磁 | ✅ | ✅ |
+| [email](#email) | 邮件收发 | ✅ | ✅ |
 | [multi-agent](#multi-agent) | 多 Agent 协调 | ✅ | ✅ |
 | [atlas](#atlas) | 代码库知识图谱 | ✅ | ✅ |
 | [incident-response](#incident-response) | 生产事故响应 | ✅ | ✅ |
@@ -56,17 +57,35 @@
 
 ### outreach
 
-学术套磁全流程自动化。材料解析、教授调研、可视化报告、个性化邮件生成。
+学术套磁全流程自动化。材料解析、教授调研、可视化报告、个性化邮件生成、邮件收发。
 
 **命令：**
-- `/outreach parse <cv>` — 解析学术材料
-- `/outreach research <field>` — 教授调研
-- `/outreach report` — 生成可视化报告
-- `/outreach email <professor>` — 生成个性化套磁邮件
+- `/outreach "配置邮箱"` — 配置邮箱（首次使用）
+- `/outreach "这是我的CV"` — 上传材料
+- `/outreach "调研 MIT CS"` — 教授调研
+- `/outreach "生成报告 MIT CS"` — 生成可视化报告
+- `/outreach "生成邮件 MIT CS"` — 生成套磁邮件
+- `/outreach "发送邮件给 MIT CS Professor"` — 发送邮件
 
 **路径：**
 - Claude Code: `outreach/claude-code-plugin/`
 - Nexgent: `outreach/nexgent-plugin/`
+
+---
+
+### email
+
+独立邮件收发插件。基于 IMAP/SMTP 协议，支持多种邮箱服务器（PKU、清华、Gmail、Outlook、QQ、163），配置后自动测试连接。
+
+**命令：**
+- `/email "配置邮箱"` — 配置邮箱
+- `/email "查看收件箱"` — 查看邮件
+- `/email "发送邮件给 xxx@example.com"` — 发送邮件
+- `/email "搜索邮件 keyword"` — 搜索邮件
+
+**路径：**
+- Claude Code: `email/claude-code-plugin/`
+- Nexgent: `email/nexgent-plugin/`
 
 ---
 
@@ -165,6 +184,9 @@ claude install-plugin github:csxq0605/plugins
 # 学术套磁
 /plugin install https://github.com/csxq0605/plugins/tree/master/outreach/nexgent-plugin
 
+# 邮件收发
+/plugin install https://github.com/csxq0605/plugins/tree/master/email/nexgent-plugin
+
 # 多 agent 协调
 /plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
 
@@ -182,7 +204,7 @@ claude install-plugin github:csxq0605/plugins
 
 ## 设计理念
 
-### 为什么是 7 个而不是更多？
+### 为什么是 8 个而不是更多？
 
 之前的结构：project-onboarding, dep-audit, adversarial-review, changelog-gen, adr-generator, session-memory, lit-review, team-coord — 8 个碎片插件。
 
@@ -194,7 +216,8 @@ claude install-plugin github:csxq0605/plugins
 |------|---------|
 | **dev-flow** | 6 合 1（onboard + audit + review + changelog + adr + memory） |
 | **research** | 独立的学术研究场景 |
-| **outreach** | 独立的学术套磁场景 |
+| **outreach** | 独立的学术套磁场景（含邮件功能） |
+| **email** | 独立的邮件收发场景（供其他场景复用） |
 | **multi-agent** | 协调层，被其他插件复用 |
 | **atlas** | 代码库理解（新人入职、重构前分析、架构文档） |
 | **incident-response** | 生产事故处理（分诊、定位、修复、复盘） |
@@ -271,6 +294,8 @@ python -m pytest multi-agent/nexgent-plugin/tests/ -v
 python -m pytest atlas/nexgent-plugin/tests/ -v
 python -m pytest incident-response/nexgent-plugin/tests/ -v
 python -m pytest migrator/nexgent-plugin/tests/ -v
+python -m pytest email/nexgent-plugin/tests/ -v
+python -m pytest outreach/nexgent-plugin/tests/ -v
 ```
 
 ### 测试覆盖率
@@ -282,7 +307,9 @@ python -m pytest migrator/nexgent-plugin/tests/ -v
 | atlas | 20 | ✅ |
 | incident-response | 27 | ✅ |
 | migrator | 22 | ✅ |
-| **总计** | **134** | **全部通过** |
+| email | 11 | ✅ |
+| outreach | 8 | ✅ |
+| **总计** | **153** | **全部通过** |
 
 ---
 

@@ -170,6 +170,16 @@
 ```bash
 # 安装全部插件
 claude install-plugin github:csxq0605/plugins
+
+# 或单独安装
+claude install-plugin github:csxq0605/plugins/dev-flow/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/lit-review/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/outreach/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/email/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/multi-agent/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/atlas/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/incident-response/claude-code-plugin
+claude install-plugin github:csxq0605/plugins/migrator/claude-code-plugin
 ```
 
 ### Nexgent

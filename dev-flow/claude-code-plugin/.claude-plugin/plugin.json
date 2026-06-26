@@ -1,0 +1,16 @@
+{
+  "name": "dev-flow",
+  "version": "1.0.0",
+  "description": "Unified development workflow — project onboarding, dependency audit, code review, changelog generation, decision recording, and cross-session memory in one integrated plugin.",
+  "skills": [
+    {
+      "name": "dev-flow",
+      "path": "../../skills/dev-flow/SKILL.md"
+    }
+  ],
+  "author": {
+    "name": "csxq0605"
+  },
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": ["workflow", "dev", "review", "audit", "changelog", "adr", "memory"]
+}

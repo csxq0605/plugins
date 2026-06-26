@@ -1,0 +1,12 @@
+{
+  "name": "dev-flow",
+  "version": "1.0.0",
+  "description": "Unified development workflow plugin for Nexgent — project onboarding, dependency audit, code review, changelog generation, decision recording, and cross-session memory.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

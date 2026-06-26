@@ -1,109 +1,75 @@
 # Claude Code & Nexgent Plugins
 
-A collection of independent plugins for Claude Code and Nexgent, designed for multi-agent workflows and enhanced developer productivity.
+3 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
 
 ## Plugins
 
-### team-coord
-Two subskills for agent team coordination — lead orchestrates (pure coordinator), teammate guides each worker. Covers inbox sync, WHAT vs HOW spawn, unified reports.
+### dev-flow
+一站式开发工作流。一个插件覆盖：项目入门 → 依赖审计 → 代码审查（6 视角）→ 变更日志 → 架构决策记录 → 跨会话记忆。
 
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
+- **Claude Code**: `dev-flow/claude-code-plugin/`
+- **Nexgent**: `dev-flow/nexgent-plugin/`
 
-### adversarial-review
-Multi-perspective code review with 6 analysis lenses (security, performance, architecture, code quality, test quality, API design), unified findings format, health scoring (0-100), and iterative fix loop.
+### research
+学术研究工作流。多源文献搜索（arXiv, Semantic Scholar）、引用网络分析、子主题分解、结构化综述合成。
 
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
+- **Claude Code**: `lit-review/claude-code-plugin/`
+- **Nexgent**: `lit-review/nexgent-plugin/`
 
-### lit-review
-Systematic literature review pipeline — multi-source academic search (arXiv, Semantic Scholar), citation network analysis, subtopic decomposition, and structured review synthesis.
+### multi-agent
+多 agent 团队协调层。Lead 纯协调、Teammate 引导执行、统一报告生成。
 
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
+- **Claude Code**: `multi-agent/claude-code-plugin/`
+- **Nexgent**: `multi-agent/nexgent-plugin/`
 
-### project-onboarding
-Automated project onboarding — scans structure, tech stack, build system, test framework, CI/CD, code style, and generates structured onboarding docs. 7 detection tools for comprehensive project analysis.
-
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
-
-### dep-audit
-Dependency vulnerability audit — scans dependency files (npm, PyPI, crates.io, Go, Maven), queries OSV vulnerability database, detects outdated packages, flags license risks, and generates structured audit reports with health scoring.
-
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
-
-### session-memory
-Persistent cross-session memory — saves and restores conversation context, key decisions, findings, and progress. Supports tagging, search, auto-expiry, and team-coord handoff. 9 memory tools for comprehensive context management.
-
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
-
-### adr-generator
-Architecture Decision Record generator — creates, manages, and indexes ADRs with multiple templates (MADR, Y-Statement), status tracking, and cross-referencing. 6 ADR tools for decision documentation.
-
-- **Claude Code**: `claude-code-plugin/`
-- **Nexgent**: `nexgent-plugin/`
-
-## Installation
+## 安装
 
 ### Claude Code
 
 ```bash
-# Install from GitHub
 claude install-plugin github:csxq0605/plugins
 ```
 
 ### Nexgent
 
-在 Nexgent 交互界面中执行：
-
 ```bash
-# 多 agent 团队协调
-/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
+# 一站式开发工作流
+/plugin install https://github.com/csxq0605/plugins/tree/master/dev-flow/nexgent-plugin
 
-# 6 视角对抗式代码审查
-/plugin install https://github.com/csxq0605/plugins/tree/master/adversarial-review/nexgent-plugin
-
-# 系统性文献调研
+# 学术研究
 /plugin install https://github.com/csxq0605/plugins/tree/master/lit-review/nexgent-plugin
 
-# 项目自动入门
-/plugin install https://github.com/csxq0605/plugins/tree/master/project-onboarding/nexgent-plugin
-
-# 依赖漏洞审计
-/plugin install https://github.com/csxq0605/plugins/tree/master/dep-audit/nexgent-plugin
-
-# 跨会话持久化记忆
-/plugin install https://github.com/csxq0605/plugins/tree/master/session-memory/nexgent-plugin
-
-# 架构决策记录
-/plugin install https://github.com/csxq0605/plugins/tree/master/adr-generator/nexgent-plugin
+# 多 agent 协调
+/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
 ```
+
+## 为什么是 3 个而不是 8 个？
+
+之前的结构：project-onboarding, dep-audit, adversarial-review, changelog-gen, adr-generator, session-memory, lit-review, team-coord — 8 个碎片插件。
+
+问题是：真实开发场景是一个 PR 流程里你需要 audit + review + changelog + ADR，不是一个一个手动调。碎片化插件创造的是伪需求。
+
+现在的结构：
+- **dev-flow** = 6 合 1（onboard + audit + review + changelog + adr + memory）
+- **research** = 独立的学术场景
+- **multi-agent** = 协调层
 
 ## Semantic Scholar API
 
-The lit-review plugin supports Semantic Scholar for enhanced paper search and citation analysis.
+research 插件支持 Semantic Scholar 进行论文搜索和引用分析。
 
-### Claude Code Version
-
-Configure via:
 ```bash
+# Claude Code
 python bin/lit-search.py set-key YOUR_API_KEY
-```
 
-### Nexgent Version
-
-Configure via environment variable or config file:
-```bash
+# Nexgent
 export SEMANTIC_SCHOLAR_API_KEY=YOUR_API_KEY
 ```
 
-Config is stored at `~/.lit-review/config.json` and shared between both versions.
+配置存储在 `~/.lit-review/config.json`，两个版本共享。
 
-## Development
+## 开发
 
-Each plugin follows the dual-version structure:
-- `plugin-name/claude-code-plugin/` — Pure SKILL.md files for Claude Code
-- `plugin-name/nexgent-plugin/` — Python tools + SKILL.md for Nexgent
+每个插件遵循双版本结构：
+- `plugin-name/claude-code-plugin/` — 纯 SKILL.md 文件
+- `plugin-name/nexgent-plugin/` — Python 工具 + SKILL.md

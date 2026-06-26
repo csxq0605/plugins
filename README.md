@@ -1,6 +1,6 @@
 # Claude Code & Nexgent Plugins
 
-3 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
+4 个插件覆盖真实开发场景。不碎片化，不制造伪需求。
 
 ## Plugins
 
@@ -15,6 +15,12 @@
 
 - **Claude Code**: `lit-review/claude-code-plugin/`
 - **Nexgent**: `lit-review/nexgent-plugin/`
+
+### outreach
+学术套磁全流程自动化。材料解析、教授调研、可视化报告、个性化邮件生成。
+
+- **Claude Code**: `outreach/claude-code-plugin/`
+- **Nexgent**: `outreach/nexgent-plugin/`
 
 ### multi-agent
 多 agent 团队协调层。Lead 纯协调、Teammate 引导执行、统一报告生成。
@@ -40,11 +46,14 @@ claude install-plugin github:csxq0605/plugins
 # 学术研究
 /plugin install https://github.com/csxq0605/plugins/tree/master/lit-review/nexgent-plugin
 
+# 学术套磁
+/plugin install https://github.com/csxq0605/plugins/tree/master/outreach/nexgent-plugin
+
 # 多 agent 协调
 /plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
 ```
 
-## 为什么是 3 个而不是 8 个？
+## 为什么是 4 个而不是 8 个？
 
 之前的结构：project-onboarding, dep-audit, adversarial-review, changelog-gen, adr-generator, session-memory, lit-review, team-coord — 8 个碎片插件。
 
@@ -52,7 +61,8 @@ claude install-plugin github:csxq0605/plugins
 
 现在的结构：
 - **dev-flow** = 6 合 1（onboard + audit + review + changelog + adr + memory）
-- **research** = 独立的学术场景
+- **research** = 独立的学术研究场景
+- **outreach** = 独立的学术套磁场景
 - **multi-agent** = 协调层
 
 ## Semantic Scholar API

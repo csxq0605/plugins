@@ -48,6 +48,16 @@ user-invocable: true
 | `outreach_generate_email` | 生成个性化套磁邮件 |
 | `outreach_list_professors` | 列出已调研的教授 |
 
+### Semantic Scholar API 工具（用于精确调研）
+
+| 工具 | 用途 |
+|------|------|
+| `semantic-scholar__author_search` | 搜索作者 |
+| `semantic-scholar__author_details` | 获取作者详情 |
+| `semantic-scholar__author_papers` | 获取作者论文列表 |
+| `semantic-scholar__paper_relevance_search` | 相关论文搜索 |
+| `semantic-scholar__paper_title_search` | 按标题搜索论文 |
+
 ## 工作流
 
 ### 0. 检查邮箱配置（首次使用）
@@ -120,6 +130,27 @@ outreach_research_professor(
     research_keywords="deep learning, computer vision, self-supervised learning"
 )
 ```
+
+**使用 Semantic Scholar API 获取精确数据：**
+
+```python
+# 1. 搜索作者
+author = semantic-scholar__author_search(name="Yann LeCun")
+
+# 2. 获取作者详情（h-index、引用数等）
+details = semantic-scholar__author_details(author_id=author["authorId"])
+
+# 3. 获取作者论文列表
+papers = semantic-scholar__author_papers(author_id=author["authorId"], limit=50)
+```
+
+**调研方法优先级**：
+1. **Semantic Scholar API** → 精确的发表数据
+2. 教授个人主页 → 最权威
+3. Google Scholar → 发表数据
+4. 学院官网 → 招生信息
+5. RateMyProfessor → 学生评价
+6. OpenReview → 审稿风格
 
 ### 4. 获取调研报告
 

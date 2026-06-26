@@ -2,7 +2,7 @@
 name: outreach
 description: "学术套磁全流程自动化 — 材料解析、教授调研、可视化报告、个性化邮件生成、邮件收发。Trigger on: '套磁', '联系教授', '申请研究生', '调研教授', 'outreach', 'cold email', '发送邮件', '配置邮箱'."
 user-invocable: true
-allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, AskUserQuestion
+allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, AskUserQuestion, semantic-scholar__author_search, semantic-scholar__author_details, semantic-scholar__author_papers, semantic-scholar__paper_relevance_search, semantic-scholar__paper_title_search
 ---
 
 # outreach — 学术套磁全流程自动化
@@ -130,15 +130,21 @@ python scripts/email_setup.py --test
 
 #### 2.2 逐个深度调研
 
-对每位教授，执行以下调研（使用 WebSearch 和 WebFetch）：
+对每位教授，执行以下调研（使用 Semantic Scholar API + WebSearch + WebFetch）：
 
 **a) 基本信息**
 - 全名、职称、所属实验室/组
 - 研究方向（详细列出）
 - 联系方式、邮箱
 
-**b) 发表统计**
-- Google Scholar 数据：h-index、总论文数、引用数
+**b) 发表统计（使用 Semantic Scholar API）**
+```python
+# 使用 Semantic Scholar API 获取精确数据
+semantic-scholar__author_search(name="教授姓名")
+semantic-scholar__author_details(author_id="作者ID")
+semantic-scholar__author_papers(author_id="作者ID", limit=50)
+```
+- h-index、总论文数、引用数
 - 近 5 年每年发文数量
 - 主要发表会议/期刊（Top 5）
 - **CCF-A 会议论文数量**（特别是大模型/LLM 方向，按年份列出）
@@ -175,10 +181,10 @@ python scripts/email_setup.py --test
 - 需要避免的事项
 
 **调研方法优先级**：
-1. 教授个人主页 → 最权威
-2. Google Scholar → 发表数据
-3. 学院官网 → 招生信息
-4. Semantic Scholar → 论文详情
+1. **Semantic Scholar API** → 精确的发表数据（h-index、引用数、论文列表）
+2. 教授个人主页 → 最权威
+3. Google Scholar → 发表数据
+4. 学院官网 → 招生信息
 5. RateMyProfessor → 学生评价
 6. OpenReview → 审稿风格
 

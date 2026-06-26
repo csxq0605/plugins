@@ -20,11 +20,32 @@ claude install-plugin github:csxq0605/plugins
 
 - 📧 **邮箱配置**：自动检测并引导配置，支持多种邮箱，配置后自动测试连接
 - 📄 **材料解析**：自动解析 CV、研究计划、成绩单等材料
-- 🔍 **教授调研**：深度调研教授的研究方向、发表统计、学生去向、导师风格
+- 🔍 **教授调研**：使用 Semantic Scholar API + WebSearch 深度调研教授
 - 📊 **可视化报告**：生成交互式 HTML 报告，支持搜索、排序、筛选
 - ✉️ **邮件生成**：基于调研报告生成个性化套磁邮件
 - 🎯 **匹配度分析**：自动评估与教授的研究方向匹配度
 - 📬 **邮件收发**：基于 IMAP/SMTP 协议的完整邮件功能
+
+## Semantic Scholar API
+
+调研功能使用 Semantic Scholar API 获取精确的论文数据（h-index、引用数、论文列表）。
+
+### 配置 API Key
+
+```bash
+# 方式 1: 环境变量
+export SEMANTIC_SCHOLAR_API_KEY=your_key_here
+
+# 方式 2: 配置文件
+# 在对话中使用：
+/outreach "设置 Semantic Scholar API Key: your_key_here"
+```
+
+**免费申请**：https://www.semanticscholar.org/product/api
+
+**速率限制**：
+- 无 key：100 请求/5 分钟（共享池）
+- 有 key：1 请求/秒（独立配额）
 
 ## 支持的邮箱
 

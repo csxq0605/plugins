@@ -57,18 +57,29 @@ claude install-plugin github:csxq0605/plugins
 
 ### Nexgent
 
-```bash
-# Clone and install
-git clone https://github.com/csxq0605/plugins.git
-cd plugins
+在 Nexgent 交互界面中执行：
 
-# Install plugin by copying to Nexgent plugins directory
-cp -r adversarial-review/nexgent-plugin ~/.nexgent/plugins/adversarial-review
-cp -r lit-review/nexgent-plugin ~/.nexgent/plugins/lit-review
-cp -r project-onboarding/nexgent-plugin ~/.nexgent/plugins/project-onboarding
-cp -r dep-audit/nexgent-plugin ~/.nexgent/plugins/dep-audit
-cp -r session-memory/nexgent-plugin ~/.nexgent/plugins/session-memory
-cp -r adr-generator/nexgent-plugin ~/.nexgent/plugins/adr-generator
+```bash
+# 多 agent 团队协调
+/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
+
+# 6 视角对抗式代码审查
+/plugin install https://github.com/csxq0605/plugins/tree/master/adversarial-review/nexgent-plugin
+
+# 系统性文献调研
+/plugin install https://github.com/csxq0605/plugins/tree/master/lit-review/nexgent-plugin
+
+# 项目自动入门
+/plugin install https://github.com/csxq0605/plugins/tree/master/project-onboarding/nexgent-plugin
+
+# 依赖漏洞审计
+/plugin install https://github.com/csxq0605/plugins/tree/master/dep-audit/nexgent-plugin
+
+# 跨会话持久化记忆
+/plugin install https://github.com/csxq0605/plugins/tree/master/session-memory/nexgent-plugin
+
+# 架构决策记录
+/plugin install https://github.com/csxq0605/plugins/tree/master/adr-generator/nexgent-plugin
 ```
 
 ## Semantic Scholar API

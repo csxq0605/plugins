@@ -143,10 +143,15 @@ def test_real_team_create_and_tasks():
         assert "review" in researcher_msgs[0].content.lower()
         print(f"[PASS] Researcher received message: {researcher_msgs[0].content[:50]}")
 
-        # Shutdown
+        # Shutdown — request then approve (two-step: requires user approval)
         manager.request_shutdown(team.team_id, "researcher")
         manager.request_shutdown(team.team_id, "writer")
         print("[PASS] Shutdown requested")
+
+        # Approve shutdown (simulating user approval)
+        manager.approve_shutdown(team.team_id, "researcher")
+        manager.approve_shutdown(team.team_id, "writer")
+        print("[PASS] Shutdown approved")
 
         # Verify teammate states
         r = manager.get_teammate(team.team_id, "researcher")

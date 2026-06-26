@@ -72,28 +72,24 @@ def test_manager_creates_subteam():
             print("[MANAGER] Agent not yet started (expected in test)")
 
         # Verify the manager's task prompt mentions sub-team capability
-        inbox_path = os.path.join(top_team.config_dir, "inbox", "tech-lead.json")
-        mgr_task = manager._build_teammate_task(
+        mgr_task = manager._build_spawn_prompt(
             name="tech-lead",
             task="Coordinate feature X",
-            team_id=top_team.team_id,
-            inbox_path=inbox_path,
             role="manager",
+            team_id=top_team.team_id,
         )
-        assert "team_create" in mgr_task
-        assert "子团队" in mgr_task or "sub-team" in mgr_task.lower()
-        print("[PASS] Manager task prompt includes sub-team instructions")
+        assert "team_tool_search" in mgr_task
+        print("[PASS] Manager task prompt includes team tool instructions")
 
-        # Verify worker's task prompt does NOT mention sub-teams
-        worker_task = manager._build_teammate_task(
+        # Verify worker's task prompt also has team tools
+        worker_task = manager._build_spawn_prompt(
             name="doc-writer",
             task="Write docs",
-            team_id=top_team.team_id,
-            inbox_path=os.path.join(top_team.config_dir, "inbox", "doc-writer.json"),
             role="worker",
+            team_id=top_team.team_id,
         )
-        assert "team_create" not in worker_task
-        print("[PASS] Worker task prompt does NOT include sub-team instructions")
+        assert "team_tool_search" in worker_task
+        print("[PASS] Worker task prompt includes team tool instructions")
 
         # Simulate what happens when the manager creates a sub-team
         # (In real usage, the manager's agent would call team_create)
@@ -192,7 +188,7 @@ def test_auto_team_decision():
     assert "team_claim_task" in tool_names
     assert "team_complete_task" in tool_names
     assert "team_shutdown" in tool_names
-    assert "team_delete" in tool_names
+    assert "team_close" in tool_names
 
     # Check that team_spawn has role parameter
     spawn_tool = next(t for t in tools if t.name == "team_spawn")
@@ -202,11 +198,11 @@ def test_auto_team_decision():
            "manager" in str(role_param.get("enum", []))
     print("[PASS] team_spawn supports role='manager' for multi-level hierarchy")
 
-    # Check that team_create has parent_team_id
+    # Verify team_create exists and has name parameter
     create_tool = next(t for t in tools if t.name == "team_create")
-    parent_param = create_tool.parameters["properties"].get("parent_team_id")
-    assert parent_param is not None
-    print("[PASS] team_create supports parent_team_id for sub-teams")
+    name_param = create_tool.parameters["properties"].get("name")
+    assert name_param is not None
+    print("[PASS] team_create has name parameter")
 
 
 if __name__ == "__main__":

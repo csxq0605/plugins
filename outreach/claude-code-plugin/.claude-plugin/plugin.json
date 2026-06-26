@@ -1,0 +1,19 @@
+{
+  "name": "outreach",
+  "description": "学术套磁全流程自动化 — 材料解析、教授调研、可视化报告、个性化邮件生成、邮件收发。",
+  "version": "1.0.0",
+  "author": {
+    "name": "csxq0605"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/csxq0605/plugins",
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": [
+    "outreach",
+    "cold-email",
+    "professor",
+    "research",
+    "graduate-school",
+    "academic"
+  ]
+}

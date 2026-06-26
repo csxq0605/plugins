@@ -1,6 +1,6 @@
-# Outreach Plugin for Claude Code
+# Email Plugin for Claude Code
 
-学术套磁全流程自动化插件。
+独立邮件收发插件，基于 IMAP/SMTP 协议。
 
 ## 安装
 
@@ -12,22 +12,16 @@ claude install-plugin github:csxq0605/plugins
 
 ```bash
 # 配置邮箱
-/outreach "配置邮箱"
+/email "配置邮箱"
 
-# 上传材料
-/outreach "这是我的CV"
-
-# 调研教授
-/outreach "调研 MIT CS"
-
-# 生成报告
-/outreach "生成报告 MIT CS"
-
-# 生成邮件
-/outreach "生成邮件 MIT CS"
+# 查看收件箱
+/email "查看收件箱"
 
 # 发送邮件
-/outreach "发送邮件给 MIT CS Professor_Name"
+/email "发送邮件给 xxx@example.com"
+
+# 搜索邮件
+/email "搜索邮件 PhD"
 ```
 
 ## 支持的邮箱
@@ -44,12 +38,7 @@ claude install-plugin github:csxq0605/plugins
 
 ## 脚本
 
-- `pipeline.py` — 调研自动化
 - `email_setup.py` — 邮箱配置
 - `email_send.py` — 邮件发送
 - `email_batch.py` — 批量发送
 - `email_list.py` — 邮件查看
-
-## License
-
-MIT

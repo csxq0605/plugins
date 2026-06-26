@@ -1,4 +1,4 @@
-# team-coord (Nexgent Plugin)
+# multi-agent (Nexgent Plugin)
 
 Nexgent 插件，提供多 agent 团队协调能力——作为 subagent 和 workflow 的**补充层**。
 
@@ -9,7 +9,6 @@ Nexgent 插件，提供多 agent 团队协调能力——作为 subagent 和 wor
 ## 安装
 
 ```bash
-# 在 Nexgent 交互界面中执行：
 /plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
 ```
 
@@ -34,10 +33,10 @@ Nexgent 插件，提供多 agent 团队协调能力——作为 subagent 和 wor
 ## 测试
 
 ```bash
-# 单元测试（38 个）
+cd multi-agent/nexgent-plugin
 python -m pytest tests/ -v
-
-# E2E 测试
-cd D:/tasks/project/Nexgent/nexgent
-python D:/tasks/project/multi-agent/multi-agent/nexgent-plugin/tests/test_real_auto_team.py
 ```
+
+## License
+
+MIT

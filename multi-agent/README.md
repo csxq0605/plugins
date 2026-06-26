@@ -1,4 +1,4 @@
-# team-coord — 多智能体协调插件
+# multi-agent — 多智能体协调插件
 
 为 Claude Code 和 Nexgent 实现的 agent team 协调能力——**作为 subagent 和 workflow 的补充层**。
 
@@ -7,11 +7,7 @@
 ### Claude Code
 
 ```bash
-# 添加 marketplace
-/plugin marketplace add csxq0605/plugins
-
-# 安装插件
-/plugin install team-coord@plugins
+claude install-plugin github:csxq0605/plugins
 ```
 
 ### Nexgent
@@ -49,24 +45,30 @@ Lead 只传 WHAT（identity、task、scope、success criteria），不传 HOW（
 ## 目录结构
 
 ```
-plugins/                           # 仓库根目录
-├── .claude-plugin/marketplace.json
-├── README.md                      # 仓库总览
-└── multi-agent/                   # team-coord 插件
-    ├── claude-code-plugin/        # Claude Code 插件（纯 SKILL.md 指令）
-    │   ├── .claude-plugin/plugin.json
-    │   ├── skills/
-    │   │   ├── lead/SKILL.md      # Lead 协调协议
-    │   │   └── teammate/SKILL.md  # Worker 执行协议
-    │   └── README.md
-    └── nexgent-plugin/            # Nexgent 插件（Python 工具 + SKILL.md）
-        ├── plugin.json
-        ├── team_tools.py          # 13 个 team 工具定义
-        ├── team_manager.py        # Team 生命周期管理
-        ├── team_core.py           # 数据结构
-        ├── inbox.py               # 文件 inbox 实现
-        ├── skills/                # SKILL.md 指令
-        └── tests/                 # 38 个单元测试 + E2E
+multi-agent/
+├── claude-code-plugin/        # Claude Code 插件（纯 SKILL.md 指令）
+│   ├── .claude-plugin/plugin.json
+│   ├── CLAUDE.md
+│   ├── README.md
+│   ├── README.en.md
+│   └── skills/
+│       ├── lead/SKILL.md      # Lead 协调协议
+│       └── teammate/SKILL.md  # Worker 执行协议
+└── nexgent-plugin/            # Nexgent 插件（Python 工具 + SKILL.md）
+    ├── __init__.py
+    ├── plugin.json
+    ├── README.md
+    ├── team_tools.py          # 13 个 team 工具定义
+    ├── team_manager.py        # Team 生命周期管理
+    ├── team_core.py           # 数据结构
+    ├── inbox.py               # 文件 inbox 实现
+    ├── lead_agent.py          # Lead agent 实现
+    ├── teammate_agent.py      # Teammate agent 实现
+    ├── references/
+    ├── skills/
+    │   ├── lead/SKILL.md
+    │   └── teammate/SKILL.md
+    └── tests/
 ```
 
 ## 测试
@@ -74,10 +76,6 @@ plugins/                           # 仓库根目录
 ```bash
 # 单元测试
 cd multi-agent/nexgent-plugin && python -m pytest tests/ -v
-
-# E2E 测试（需要 API key）
-cd D:/tasks/project/Nexgent/nexgent
-python D:/tasks/project/multi-agent/nexgent-plugin/tests/test_real_auto_team.py
 ```
 
 ## License

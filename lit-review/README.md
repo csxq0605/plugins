@@ -7,8 +7,7 @@
 ### Claude Code
 
 ```bash
-/plugin marketplace add csxq0605/plugins
-/plugin install lit-review@plugins
+claude install-plugin github:csxq0605/plugins
 ```
 
 ### Nexgent

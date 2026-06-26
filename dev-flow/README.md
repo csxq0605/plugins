@@ -11,13 +11,13 @@
 ### Claude Code
 
 ```bash
-/plugin install dev-flow
+claude install-plugin github:csxq0605/plugins
 ```
 
 ### Nexgent
 
 ```bash
-/plugin install dev-flow
+/plugin install https://github.com/csxq0605/plugins/tree/master/dev-flow/nexgent-plugin
 ```
 
 ## 使用

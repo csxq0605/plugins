@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-/plugin install https://github.com/csxq0605/plugins/tree/master/lit-review/claude-code-plugin
+claude install-plugin github:csxq0605/plugins
 ```
 
 ## 技能列表

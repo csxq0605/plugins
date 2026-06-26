@@ -1,16 +1,16 @@
-# team-coord (Claude Code Plugin)
+# multi-agent (Claude Code Plugin)
 
 一个 Claude Code plugin，提供多 agent 团队协调能力——作为 subagent 和 workflow 的**补充层**。
 
-- **`team-coord:lead`** — 纯协调者：spawn worker、分配任务、收集结果、shutdown 审批。**不做实际工作。**
-- **`team-coord:teammate`** — 实际执行者：执行任务、向 lead 汇报。可用所有工具（web_search、subagent 等）。
+- **`multi-agent:lead`** — 纯协调者：spawn worker、分配任务、收集结果、shutdown 审批。**不做实际工作。**
+- **`multi-agent:teammate`** — 实际执行者：执行任务、向 lead 汇报。可用所有工具（web_search、subagent 等）。
 
 外加可选 reference docs 用于叠加 `superpowers` 软件开发工作流。
 
 ## 安装
 
 ```bash
-/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/claude-code-plugin
+claude install-plugin github:csxq0605/plugins
 ```
 
 ## 插件定位：补充层
@@ -25,8 +25,8 @@
 
 | Subskill | 角色 | 涵盖 |
 |---|---|---|
-| `team-coord:lead` | 纯协调者 | spawn、任务分配、shutdown 审批、结果综合 |
-| `team-coord:teammate` | 实际执行者 | inbox sync、dispatch limits、完成报告 |
+| `multi-agent:lead` | 纯协调者 | spawn、任务分配、shutdown 审批、结果综合 |
+| `multi-agent:teammate` | 实际执行者 | inbox sync、dispatch limits、完成报告 |
 
 ## 核心设计
 

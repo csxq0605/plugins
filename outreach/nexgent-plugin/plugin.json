@@ -1,0 +1,16 @@
+{
+  "name": "outreach",
+  "version": "1.0.0",
+  "description": "学术套磁全流程自动化 — 材料解析、教授调研、可视化报告、个性化邮件生成",
+  "author": "OpenClaw",
+  "tools": [
+    "outreach_parse_materials",
+    "outreach_list_profiles",
+    "outreach_research_professor",
+    "outreach_get_research",
+    "outreach_generate_report",
+    "outreach_generate_email",
+    "outreach_list_professors"
+  ],
+  "skills": ["skills/outreach"]
+}

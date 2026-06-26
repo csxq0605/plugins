@@ -1,16 +1,16 @@
-# team-coord (Claude Code Plugin)
+# multi-agent (Claude Code Plugin)
 
 A Claude Code plugin providing multi-agent team coordination — a **supplement** to subagent and workflow.
 
-- **`team-coord:lead`** — Pure coordinator: spawn workers, assign tasks, collect results, shutdown approval. **Never does actual work.**
-- **`team-coord:teammate`** — Actual executor: performs tasks, reports to lead. Can use all tools (web_search, subagent, etc.).
+- **`multi-agent:lead`** — Pure coordinator: spawn workers, assign tasks, collect results, shutdown approval. **Never does actual work.**
+- **`multi-agent:teammate`** — Actual executor: performs tasks, reports to lead. Can use all tools (web_search, subagent, etc.).
 
 Plus optional reference docs for layering the `superpowers` development workflow on top.
 
 ## Installation
 
 ```bash
-/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/claude-code-plugin
+claude install-plugin github:csxq0605/plugins
 ```
 
 ## Plugin Positioning: Supplement Layer
@@ -25,8 +25,8 @@ Plus optional reference docs for layering the `superpowers` development workflow
 
 | Subskill | Role | Covers |
 |---|---|---|
-| `team-coord:lead` | Pure coordinator | Spawn, task assignment, shutdown approval, result synthesis |
-| `team-coord:teammate` | Actual executor | Inbox sync, dispatch limits, completion reporting |
+| `multi-agent:lead` | Pure coordinator | Spawn, task assignment, shutdown approval, result synthesis |
+| `multi-agent:teammate` | Actual executor | Inbox sync, dispatch limits, completion reporting |
 
 ## Core Design
 

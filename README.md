@@ -27,6 +27,7 @@
 ### Claude Code
 
 ```bash
+# 安装全部插件
 claude install-plugin github:csxq0605/plugins
 ```
 

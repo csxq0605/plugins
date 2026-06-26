@@ -50,6 +50,15 @@
       },
       "category": "security",
       "source": "./dep-audit/claude-code-plugin"
+    },
+    {
+      "name": "session-memory",
+      "description": "Persistent cross-session memory — saves and restores conversation context, key decisions, findings, and progress. Supports tagging, search, auto-expiry, and team-coord handoff.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "productivity",
+      "source": "./session-memory/claude-code-plugin"
     }
   ]
 }

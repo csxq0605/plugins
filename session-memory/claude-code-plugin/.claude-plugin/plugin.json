@@ -1,0 +1,16 @@
+{
+  "name": "session-memory",
+  "version": "1.0.0",
+  "description": "Persistent cross-session memory — saves and restores conversation context, key decisions, findings, and progress. Supports tagging, search, auto-expiry, and team-coord handoff.",
+  "skills": [
+    {
+      "name": "memory",
+      "path": "../../skills/memory/SKILL.md"
+    }
+  ],
+  "author": {
+    "name": "csxq0605"
+  },
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": ["memory", "context", "session", "persistence", "handoff"]
+}

@@ -34,6 +34,12 @@ Dependency vulnerability audit — scans dependency files (npm, PyPI, crates.io,
 - **Claude Code**: `claude-code-plugin/`
 - **Nexgent**: `nexgent-plugin/`
 
+### session-memory
+Persistent cross-session memory — saves and restores conversation context, key decisions, findings, and progress. Supports tagging, search, auto-expiry, and team-coord handoff. 9 memory tools for comprehensive context management.
+
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
+
 ## Installation
 
 ### Claude Code
@@ -55,6 +61,7 @@ cp -r adversarial-review/nexgent-plugin ~/.nexgent/plugins/adversarial-review
 cp -r lit-review/nexgent-plugin ~/.nexgent/plugins/lit-review
 cp -r project-onboarding/nexgent-plugin ~/.nexgent/plugins/project-onboarding
 cp -r dep-audit/nexgent-plugin ~/.nexgent/plugins/dep-audit
+cp -r session-memory/nexgent-plugin ~/.nexgent/plugins/session-memory
 ```
 
 ## Semantic Scholar API

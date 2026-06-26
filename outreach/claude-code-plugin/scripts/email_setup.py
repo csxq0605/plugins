@@ -104,10 +104,10 @@ def test_connection(config):
     print("Testing SMTP connection...")
     try:
         if config["smtp_port"] == 587:
-            smtp = smtplib.SMTP(config["smtp_server"], config["smtp_port"])
+            smtp = smtplib.SMTP(config["smtp_server"], config["smtp_port"], timeout=15)
             smtp.starttls()
         else:
-            smtp = smtplib.SMTP_SSL(config["smtp_server"], config["smtp_port"])
+            smtp = smtplib.SMTP_SSL(config["smtp_server"], config["smtp_port"], timeout=15)
         smtp.login(config["email"], config["password"])
         smtp.quit()
         print("  [OK] SMTP connection successful")

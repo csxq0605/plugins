@@ -40,6 +40,12 @@ Persistent cross-session memory — saves and restores conversation context, key
 - **Claude Code**: `claude-code-plugin/`
 - **Nexgent**: `nexgent-plugin/`
 
+### adr-generator
+Architecture Decision Record generator — creates, manages, and indexes ADRs with multiple templates (MADR, Y-Statement), status tracking, and cross-referencing. 6 ADR tools for decision documentation.
+
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
+
 ## Installation
 
 ### Claude Code
@@ -62,6 +68,7 @@ cp -r lit-review/nexgent-plugin ~/.nexgent/plugins/lit-review
 cp -r project-onboarding/nexgent-plugin ~/.nexgent/plugins/project-onboarding
 cp -r dep-audit/nexgent-plugin ~/.nexgent/plugins/dep-audit
 cp -r session-memory/nexgent-plugin ~/.nexgent/plugins/session-memory
+cp -r adr-generator/nexgent-plugin ~/.nexgent/plugins/adr-generator
 ```
 
 ## Semantic Scholar API

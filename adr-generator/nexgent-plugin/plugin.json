@@ -1,0 +1,12 @@
+{
+  "name": "adr-generator",
+  "version": "1.0.0",
+  "description": "Architecture Decision Record generator plugin for Nexgent — creates, manages, and indexes ADRs with multiple templates (MADR, Y-Statement), status tracking, and cross-referencing.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

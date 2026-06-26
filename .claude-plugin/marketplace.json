@@ -59,6 +59,15 @@
       },
       "category": "productivity",
       "source": "./session-memory/claude-code-plugin"
+    },
+    {
+      "name": "adr-generator",
+      "description": "Architecture Decision Record generator — creates, manages, and indexes ADRs with multiple templates (MADR, Y-Statement), status tracking, and cross-referencing.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "documentation",
+      "source": "./adr-generator/claude-code-plugin"
     }
   ]
 }

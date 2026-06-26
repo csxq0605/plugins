@@ -167,7 +167,24 @@
 
 ### Claude Code
 
-在 Claude Code 中运行 `/plugin` 命令，然后选择 "Discover" 浏览插件市场，或直接搜索 `csxq0605/plugins`。
+添加插件市场：
+
+```bash
+/plugin marketplace add csxq0605/plugins
+```
+
+之后可以在 `/plugin > Discover` 里浏览，或直接安装某个插件：
+
+```bash
+/plugin install dev-flow@csxq0605-plugins
+/plugin install research@csxq0605-plugins
+/plugin install outreach@csxq0605-plugins
+/plugin install email@csxq0605-plugins
+/plugin install multi-agent@csxq0605-plugins
+/plugin install atlas@csxq0605-plugins
+/plugin install incident-response@csxq0605-plugins
+/plugin install migrator@csxq0605-plugins
+```
 
 ### Nexgent
 

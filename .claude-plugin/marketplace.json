@@ -1,32 +1,23 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "plugins",
-  "description": "Claude Code & Nexgent plugin collection — team coordination, multi-perspective code review, systematic literature review, project onboarding, and dependency audit.",
+  "name": "csxq0605-plugins",
+  "description": "Personal Claude Code plugins marketplace — 8 plugins covering dev workflows, academic research, incident response, and more.",
   "owner": {
     "name": "csxq0605"
   },
   "plugins": [
     {
-      "name": "team-coord",
-      "description": "Two subskills for agent team coordination — team-coord:lead orchestrates a team (pure coordinator, never does actual work), team-coord:teammate guides each worker (executes tasks, returns raw findings). Covers inbox sync protocol, WHAT vs HOW spawn philosophy, and unified report synthesis.",
+      "name": "dev-flow",
+      "description": "Unified development workflow — project onboarding, dependency audit, code review (6 perspectives), changelog generation, ADR, and cross-session memory in one integrated plugin.",
       "author": {
         "name": "csxq0605"
       },
-      "category": "productivity",
-      "source": "./multi-agent/claude-code-plugin"
+      "category": "development",
+      "source": "./dev-flow/claude-code-plugin"
     },
     {
-      "name": "adversarial-review",
-      "description": "Multi-perspective code review with 6 analysis lenses (security, performance, architecture, code quality, test quality, API design), unified findings format, health scoring (0-100), and iterative fix loop.",
-      "author": {
-        "name": "csxq0605"
-      },
-      "category": "code-quality",
-      "source": "./adversarial-review/claude-code-plugin"
-    },
-    {
-      "name": "lit-review",
-      "description": "Systematic literature review pipeline — multi-source academic search (arXiv, Semantic Scholar), citation network analysis, subtopic decomposition, and structured review synthesis.",
+      "name": "research",
+      "description": "Academic research workflow — multi-source literature search (arXiv, Semantic Scholar), citation network analysis, subtopic decomposition, and structured synthesis.",
       "author": {
         "name": "csxq0605"
       },
@@ -34,40 +25,58 @@
       "source": "./lit-review/claude-code-plugin"
     },
     {
-      "name": "project-onboarding",
-      "description": "Automated project onboarding — scans structure, tech stack, build system, test framework, CI/CD, code style, and generates structured onboarding docs.",
-      "author": {
-        "name": "csxq0605"
-      },
-      "category": "developer-experience",
-      "source": "./project-onboarding/claude-code-plugin"
-    },
-    {
-      "name": "dep-audit",
-      "description": "Dependency vulnerability audit — scans dependency files, checks OSV vulnerability database, detects outdated packages, flags license risks, and generates structured audit reports.",
-      "author": {
-        "name": "csxq0605"
-      },
-      "category": "security",
-      "source": "./dep-audit/claude-code-plugin"
-    },
-    {
-      "name": "session-memory",
-      "description": "Persistent cross-session memory — saves and restores conversation context, key decisions, findings, and progress. Supports tagging, search, auto-expiry, and team-coord handoff.",
+      "name": "outreach",
+      "description": "Academic outreach automation — CV parsing, professor research, visual reports, and personalized email generation.",
       "author": {
         "name": "csxq0605"
       },
       "category": "productivity",
-      "source": "./session-memory/claude-code-plugin"
+      "source": "./outreach/claude-code-plugin"
     },
     {
-      "name": "adr-generator",
-      "description": "Architecture Decision Record generator — creates, manages, and indexes ADRs with multiple templates (MADR, Y-Statement), status tracking, and cross-referencing.",
+      "name": "email",
+      "description": "Email sending and receiving plugin — IMAP/SMTP support for multiple providers (PKU, Tsinghua, Gmail, Outlook, QQ, 163).",
       "author": {
         "name": "csxq0605"
       },
-      "category": "documentation",
-      "source": "./adr-generator/claude-code-plugin"
+      "category": "productivity",
+      "source": "./email/claude-code-plugin"
+    },
+    {
+      "name": "multi-agent",
+      "description": "Multi-agent team coordination — lead/teammate roles, inbox sync protocol, shared task list, and two-step shutdown.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "productivity",
+      "source": "./multi-agent/claude-code-plugin"
+    },
+    {
+      "name": "atlas",
+      "description": "Codebase knowledge atlas — multi-agent parallel exploration to map architecture, data flows, dependencies, and patterns.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "development",
+      "source": "./atlas/claude-code-plugin"
+    },
+    {
+      "name": "incident-response",
+      "description": "Structured incident response — triage, diagnose, fix, verify, postmortem. Timeline tracking and automated report generation.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "operations",
+      "source": "./incident-response/claude-code-plugin"
+    },
+    {
+      "name": "migrator",
+      "description": "Framework migration assistant — analyze codebase, generate migration plans, execute step by step with verification.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "development",
+      "source": "./migrator/claude-code-plugin"
     }
   ]
 }

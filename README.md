@@ -167,20 +167,7 @@
 
 ### Claude Code
 
-```bash
-# 安装全部插件
-claude install-plugin github:csxq0605/plugins
-
-# 或单独安装
-claude install-plugin github:csxq0605/plugins/dev-flow/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/lit-review/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/outreach/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/email/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/multi-agent/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/atlas/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/incident-response/claude-code-plugin
-claude install-plugin github:csxq0605/plugins/migrator/claude-code-plugin
-```
+在 Claude Code 中运行 `/plugin` 命令，然后选择 "Discover" 浏览插件市场，或直接搜索 `csxq0605/plugins`。
 
 ### Nexgent
 

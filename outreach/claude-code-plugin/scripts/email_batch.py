@@ -15,7 +15,23 @@ from pathlib import Path
 from datetime import datetime
 
 CONFIG_FILE = Path.home() / ".outreach" / "email_config.json"
-LOGS_DIR = Path.home() / ".outreach" / "logs"
+
+# 日志和学校数据默认放在当前目录/.outreach/ (项目级)
+# 可通过 --path 参数指定其他位置
+DEFAULT_LOGS_DIR = Path.cwd() / ".outreach" / "logs"
+DEFAULT_SCHOOLS_DIR = Path.cwd() / ".outreach" / "schools"
+
+def get_logs_dir(path=None):
+    """获取日志目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".outreach" / "logs"
+    return DEFAULT_LOGS_DIR
+
+def get_schools_dir(path=None):
+    """获取学校数据目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".outreach" / "schools"
+    return DEFAULT_SCHOOLS_DIR
 
 
 def load_config():
@@ -90,7 +106,13 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="试运行")
     parser.add_argument("--subject", help="邮件主题（从文件读取）")
     parser.add_argument("--body", help="邮件正文（从文件读取）")
+    parser.add_argument("--path", help="Project root path. Data will be stored in <path>/.outreach/")
     args = parser.parse_args()
+
+    # 初始化目录
+    global LOGS_DIR
+    LOGS_DIR = get_logs_dir(args.path)
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     # 加载配置
     config = load_config()
@@ -114,7 +136,7 @@ def main():
         print("🔍 DRY RUN 模式\n")
 
     # 检查是否有邮件草稿目录
-    email_drafts_dir = Path.home() / ".outreach" / "schools"
+    email_drafts_dir = get_schools_dir(args.path)
 
     results = {"success": 0, "failed": 0}
 

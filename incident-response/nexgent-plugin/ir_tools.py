@@ -42,14 +42,15 @@ STATUS_VALUES = ["open", "investigating", "fixing", "verifying", "closed"]
 # Helpers
 # ============================================================
 
-def _get_incidents_dir() -> Path:
-    """Get the incidents directory."""
-    return Path(".incidents").resolve()
+def _get_incidents_dir(root: Path = None) -> Path:
+    """Get the incidents directory relative to project root."""
+    base = root if root else Path.cwd()
+    return (base / ".incidents").resolve()
 
 
-def _ensure_incidents_dir() -> Path:
+def _ensure_incidents_dir(root: Path = None) -> Path:
     """Ensure incidents directory exists."""
-    incidents_dir = _get_incidents_dir()
+    incidents_dir = _get_incidents_dir(root)
     incidents_dir.mkdir(parents=True, exist_ok=True)
     return incidents_dir
 
@@ -139,6 +140,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Incidents will be stored in <path>/.incidents/",
+            },
             "title": {
                 "type": "string",
                 "description": "Brief description of the incident.",
@@ -162,7 +167,8 @@ _register(
 
 def _ir_start(args: dict) -> dict:
     """Create a new incident."""
-    incidents_dir = _ensure_incidents_dir()
+    root = Path(args.get("path", ".")).resolve()
+    incidents_dir = _ensure_incidents_dir(root)
     index = _load_index(incidents_dir)
 
     inc_id = _generate_incident_id(index)
@@ -226,6 +232,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID (e.g., INC-001). If not provided, uses the most recent open incident.",
@@ -253,7 +263,7 @@ _register(
 
 def _ir_triage(args: dict) -> dict:
     """Triage an incident."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     # Find incident
@@ -327,6 +337,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent open incident.",
@@ -349,7 +363,7 @@ _register(
 
 def _ir_timeline(args: dict) -> dict:
     """Add a timeline event."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -388,6 +402,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent open incident.",
@@ -414,7 +432,7 @@ _register(
 
 def _ir_diagnose(args: dict) -> dict:
     """Diagnose an incident."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -496,6 +514,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent open incident.",
@@ -517,7 +539,7 @@ _register(
 
 def _ir_fix(args: dict) -> dict:
     """Record a fix action."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -567,6 +589,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent open incident.",
@@ -589,7 +615,7 @@ _register(
 
 def _ir_verify(args: dict) -> dict:
     """Record verification."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -651,6 +677,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent open incident.",
@@ -668,7 +698,7 @@ _register(
 
 def _ir_close(args: dict) -> dict:
     """Close an incident."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -732,6 +762,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "incident_id": {
                 "type": "string",
                 "description": "Incident ID. If not provided, uses the most recent closed incident.",
@@ -763,7 +797,7 @@ _register(
 
 def _ir_postmortem(args: dict) -> dict:
     """Generate a postmortem report."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     inc_id = args.get("incident_id")
 
     if not inc_id:
@@ -927,6 +961,10 @@ _register(
     parameters={
         "type": "object",
         "properties": {
+            "path": {
+                "type": "string",
+                "description": "Project root path. Data will be stored in <path>/.incidents/",
+            },
             "status": {
                 "type": "string",
                 "enum": ["open", "investigating", "fixing", "verifying", "closed"],
@@ -946,7 +984,7 @@ _register(
 
 def _ir_list(args: dict) -> dict:
     """List incidents."""
-    incidents_dir = _ensure_incidents_dir()
+    incidents_dir = _ensure_incidents_dir(Path(args.get("path", ".")).resolve())
     index = _load_index(incidents_dir)
 
     incidents = index["incidents"]

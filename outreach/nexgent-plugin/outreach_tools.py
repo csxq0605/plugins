@@ -13,20 +13,41 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
-# 工作目录
-OUTREACH_DIR = Path.home() / ".outreach"
-INBOX_DIR = OUTREACH_DIR / "inbox"
-PROFILES_DIR = OUTREACH_DIR / "profiles"
-SCHOOLS_DIR = OUTREACH_DIR / "schools"
-LOGS_DIR = OUTREACH_DIR / "logs"
-TEMPLATES_DIR = OUTREACH_DIR / "templates"
+# 配置文件放在 ~/.outreach/ (用户级配置)
+CONFIG_DIR = Path.home() / ".outreach"
 
-# 确保目录存在
-for d in [INBOX_DIR, PROFILES_DIR, SCHOOLS_DIR, LOGS_DIR, TEMPLATES_DIR]:
-    d.mkdir(parents=True, exist_ok=True)
+# 任务文件默认放在当前目录/.outreach/ (项目级)
+# 可通过 path 参数指定其他位置
+DEFAULT_TASK_DIR = Path.cwd() / ".outreach"
+
+def get_task_dir(path=None):
+    """获取任务目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".outreach"
+    return DEFAULT_TASK_DIR
+
+# 这些变量在工具调用时根据 path 参数初始化
+OUTREACH_DIR = None
+INBOX_DIR = None
+PROFILES_DIR = None
+SCHOOLS_DIR = None
+LOGS_DIR = None
+TEMPLATES_DIR = None
+
+def init_dirs(path=None):
+    """初始化目录结构"""
+    global OUTREACH_DIR, INBOX_DIR, PROFILES_DIR, SCHOOLS_DIR, LOGS_DIR, TEMPLATES_DIR
+    OUTREACH_DIR = get_task_dir(path)
+    INBOX_DIR = OUTREACH_DIR / "inbox"
+    PROFILES_DIR = OUTREACH_DIR / "profiles"
+    SCHOOLS_DIR = OUTREACH_DIR / "schools"
+    LOGS_DIR = OUTREACH_DIR / "logs"
+    TEMPLATES_DIR = OUTREACH_DIR / "templates"
+    for d in [INBOX_DIR, PROFILES_DIR, SCHOOLS_DIR, LOGS_DIR, TEMPLATES_DIR]:
+        d.mkdir(parents=True, exist_ok=True)
 
 
-def outreach_parse_materials(file_path: str = None, content: str = None, filename: str = "material") -> Dict[str, Any]:
+def outreach_parse_materials(file_path: str = None, content: str = None, filename: str = "material", path: str = None) -> Dict[str, Any]:
     """
     解析用户上传的个人材料（CV、研究计划、成绩单等）
 
@@ -34,10 +55,13 @@ def outreach_parse_materials(file_path: str = None, content: str = None, filenam
         file_path: 文件路径（可选）
         content: 文件内容（可选，与file_path二选一）
         filename: 文件名（当使用content时）
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
 
     Returns:
         解析结果，包含提取的关键信息
     """
+    init_dirs(path)
+
     if file_path:
         path = Path(file_path)
         if not path.exists():
@@ -134,7 +158,7 @@ def _extract_info(text: str) -> Dict[str, str]:
     return info
 
 
-def outreach_list_profiles() -> Dict[str, Any]:
+def outreach_list_profiles(path: str = None) -> Dict[str, Any]:
     """
     列出所有已解析的个人材料
 
@@ -168,7 +192,8 @@ def outreach_research_professor(
     dept: str,
     homepage: str = "",
     email: str = "",
-    research_keywords: str = ""
+    research_keywords: str = "",
+    path: str = None
 ) -> Dict[str, Any]:
     """
     调研单个教授，生成详细调研报告
@@ -179,11 +204,14 @@ def outreach_research_professor(
         dept: 院系
         homepage: 个人主页URL（可选）
         email: 邮箱（可选）
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
         research_keywords: 研究方向关键词（可选）
 
     Returns:
         调研结果
     """
+    init_dirs(path)
+
     # 创建目录
     school_dir = SCHOOLS_DIR / f"{school}_{dept}"
     prof_dir = school_dir / name.replace(" ", "_")
@@ -296,7 +324,7 @@ def outreach_research_professor(
     }
 
 
-def outreach_get_research(school: str, dept: str, professor: str) -> Dict[str, Any]:
+def outreach_get_research(school: str, dept: str, professor: str, path: str = None) -> Dict[str, Any]:
     """
     获取教授的调研报告
 
@@ -304,10 +332,13 @@ def outreach_get_research(school: str, dept: str, professor: str) -> Dict[str, A
         school: 学校名称
         dept: 院系
         professor: 教授姓名
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
 
     Returns:
         调研报告内容
     """
+    init_dirs(path)
+
     prof_dir = SCHOOLS_DIR / f"{school}_{dept}" / professor.replace(" ", "_")
     research_file = prof_dir / "research.md"
 
@@ -335,17 +366,20 @@ def outreach_get_research(school: str, dept: str, professor: str) -> Dict[str, A
     }
 
 
-def outreach_generate_report(school: str, dept: str) -> Dict[str, Any]:
+def outreach_generate_report(school: str, dept: str, path: str = None) -> Dict[str, Any]:
     """
     生成HTML可视化报告
 
     Args:
         school: 学校名称
         dept: 院系
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
 
     Returns:
         报告生成结果
     """
+    init_dirs(path)
+
     school_dir = SCHOOLS_DIR / f"{school}_{dept}"
     if not school_dir.exists():
         return {
@@ -613,7 +647,8 @@ def outreach_generate_email(
     school: str,
     dept: str,
     professor: str,
-    profile_name: str = None
+    profile_name: str = None,
+    path: str = None
 ) -> Dict[str, Any]:
     """
     为教授生成个性化套磁邮件
@@ -623,10 +658,13 @@ def outreach_generate_email(
         dept: 院系
         professor: 教授姓名
         profile_name: 个人材料名称（可选，默认使用第一个）
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
 
     Returns:
         邮件生成结果
     """
+    init_dirs(path)
+
     prof_dir = SCHOOLS_DIR / f"{school}_{dept}" / professor.replace(" ", "_")
     research_file = prof_dir / "research.md"
 
@@ -702,17 +740,20 @@ Best regards,
     }
 
 
-def outreach_list_professors(school: str = None, dept: str = None) -> Dict[str, Any]:
+def outreach_list_professors(school: str = None, dept: str = None, path: str = None) -> Dict[str, Any]:
     """
     列出已调研的教授
 
     Args:
         school: 学校名称（可选）
         dept: 院系（可选）
+        path: 项目根路径，任务文件将存储在 <path>/.outreach/
 
     Returns:
         教授列表
     """
+    init_dirs(path)
+
     professors = []
 
     if school and dept:

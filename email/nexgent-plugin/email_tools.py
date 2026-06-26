@@ -319,26 +319,27 @@ def email_send(
     Returns:
         发送结果
     """
-    config = _load_config()
-    if not config:
-        return {
-            "success": False,
-            "error": "Email not configured, please use email_setup first"
-        }
-
+    # Dry run mode doesn't need config
     if dry_run:
         return {
             "success": True,
             "dry_run": True,
             "message": "Dry run mode, email not sent",
             "preview": {
-                "from": f"{config['name']} <{config['email']}>",
+                "from": "dry-run@example.com",
                 "to": to,
                 "cc": cc,
                 "bcc": bcc,
                 "subject": subject,
                 "body": body[:500] + "..." if len(body) > 500 else body
             }
+        }
+
+    config = _load_config()
+    if not config:
+        return {
+            "success": False,
+            "error": "Email not configured, please use email_setup first"
         }
 
     try:

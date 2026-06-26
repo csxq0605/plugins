@@ -13,7 +13,16 @@ from pathlib import Path
 from datetime import datetime
 
 CONFIG_FILE = Path.home() / ".outreach" / "email_config.json"
-LOGS_DIR = Path.home() / ".outreach" / "logs"
+
+# 日志默认放在当前目录/.outreach/logs/ (项目级)
+# 可通过 --path 参数指定其他位置
+DEFAULT_LOGS_DIR = Path.cwd() / ".outreach" / "logs"
+
+def get_logs_dir(path=None):
+    """获取日志目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".outreach" / "logs"
+    return DEFAULT_LOGS_DIR
 
 
 def load_config():
@@ -113,7 +122,13 @@ def main():
     parser.add_argument("--bcc", help="密送")
     parser.add_argument("--html", action="store_true", help="HTML格式")
     parser.add_argument("--dry-run", action="store_true", help="试运行")
+    parser.add_argument("--path", help="Project root path. Logs will be stored in <path>/.outreach/logs/")
     args = parser.parse_args()
+
+    # 初始化日志目录
+    global LOGS_DIR
+    LOGS_DIR = get_logs_dir(args.path)
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     # 读取正文
     body = args.body

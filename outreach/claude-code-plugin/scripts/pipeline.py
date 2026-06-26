@@ -20,12 +20,27 @@ import csv
 from pathlib import Path
 from datetime import datetime
 
-BASE = Path.home() / ".outreach"
-INBOX = BASE / "inbox"
-PROFILES = BASE / "profiles"
-SCHOOLS = BASE / "schools"
+# 配置文件放在 ~/.outreach/ (用户级配置)
+CONFIG_DIR = Path.home() / ".outreach"
+
+# 任务文件默认放在当前目录/.outreach/ (项目级)
+# 可通过 --path 参数指定其他位置
+DEFAULT_TASK_DIR = Path.cwd() / ".outreach"
+
+def get_task_dir(path=None):
+    """获取任务目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".outreach"
+    return DEFAULT_TASK_DIR
+
+# 这些变量在 main() 中根据 --path 参数初始化
+BASE = None
+INBOX = None
+PROFILES = None
+SCHOOLS = None
+LOGS = None
+
 TEMPLATES = Path(__file__).parent.parent / "templates"
-LOGS = BASE / "logs"
 
 def agent(prompt, timeout=180):
     """ OpenClaw agent"""
@@ -784,7 +799,10 @@ def generate_emails(school, dept, prof_name=None, all_profs=False):
 # CLI
 # ============================================================
 def main():
+    global BASE, INBOX, PROFILES, SCHOOLS, LOGS
+
     parser = argparse.ArgumentParser(description="")
+    parser.add_argument("--path", help="Project root path. Task files will be stored in <path>/.outreach/")
     sub = parser.add_subparsers(dest="command")
 
     # setup: 
@@ -824,6 +842,18 @@ def main():
     p_f.add_argument("--dry-run", action="store_true")
 
     args = parser.parse_args()
+
+    # 初始化任务目录
+    task_dir = get_task_dir(args.path)
+    BASE = task_dir
+    INBOX = task_dir / "inbox"
+    PROFILES = task_dir / "profiles"
+    SCHOOLS = task_dir / "schools"
+    LOGS = task_dir / "logs"
+
+    # 确保目录存在
+    for d in [INBOX, PROFILES, SCHOOLS, LOGS]:
+        d.mkdir(parents=True, exist_ok=True)
 
     if args.command == "setup":
         parse_profile()

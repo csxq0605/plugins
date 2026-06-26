@@ -658,3 +658,50 @@ def get_tools() -> list:
         ]
 
     return tools_raw
+
+
+def get_permissions() -> dict:
+    """Return permission descriptions for each tool."""
+    return {
+        "lit_set_key": "Set Semantic Scholar API key",
+        "lit_get_config": "Show current configuration",
+        "lit_create_workspace": "Create a research workspace",
+        "lit_add_paper": "Add a paper to workspace",
+        "lit_get_paper": "Get paper details",
+        "lit_list_papers": "List papers in workspace",
+        "lit_search_local": "Search papers locally",
+        "lit_add_analysis": "Add analysis to paper",
+        "lit_synthesize": "Get synthesis data",
+        "lit_list_workspaces": "List all workspaces",
+        "lit_search_web": "Search papers via APIs",
+        "lit_citations": "Get paper citations",
+        "lit_references": "Get paper references",
+        "lit_recommend": "Get paper recommendations",
+    }
+
+
+def call_tool(name: str, args: dict):
+    """Dispatch a tool call by name."""
+    tool_map = {
+        "lit_set_key": _lit_set_key,
+        "lit_get_config": _lit_get_config,
+        "lit_create_workspace": _lit_create_workspace,
+        "lit_add_paper": _lit_add_paper,
+        "lit_get_paper": _lit_get_paper,
+        "lit_list_papers": _lit_list_papers,
+        "lit_search_local": _lit_search_local,
+        "lit_add_analysis": _lit_add_analysis,
+        "lit_synthesize": _lit_synthesize,
+        "lit_list_workspaces": _lit_list_workspaces,
+        "lit_search_web": _lit_search_web,
+        "lit_citations": _lit_citations,
+        "lit_references": _lit_references,
+        "lit_recommend": _lit_recommend,
+    }
+    func = tool_map.get(name)
+    if not func:
+        return {"error": f"Unknown tool: {name}"}
+    try:
+        return func(args)
+    except Exception as e:
+        return {"error": str(e)}

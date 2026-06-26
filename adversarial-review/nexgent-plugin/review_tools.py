@@ -463,3 +463,34 @@ def get_tools() -> list:
         ]
 
     return tools_raw
+
+
+def get_permissions() -> dict:
+    """Return permission descriptions for each tool."""
+    return {
+        "review_start": "Start a new adversarial review session",
+        "review_add_finding": "Add a finding to a review session",
+        "review_get_findings": "Get findings from a review session",
+        "review_health_score": "Calculate health scores for a review session",
+        "review_export": "Export review results",
+        "review_list_sessions": "List all active review sessions",
+    }
+
+
+def call_tool(name: str, args: dict):
+    """Dispatch a tool call by name."""
+    tool_map = {
+        "review_start": _review_start,
+        "review_add_finding": _review_add_finding,
+        "review_get_findings": _review_get_findings,
+        "review_health_score": _review_health_score,
+        "review_export": _review_export,
+        "review_list_sessions": _review_list_sessions,
+    }
+    func = tool_map.get(name)
+    if not func:
+        return {"error": f"Unknown tool: {name}"}
+    try:
+        return func(args)
+    except Exception as e:
+        return {"error": str(e)}

@@ -5,8 +5,8 @@ and structured literature review synthesis.
 """
 
 try:
-    from .lit_tools import get_tools
+    from .lit_tools import get_tools, get_permissions, call_tool
 except ImportError:
-    from lit_tools import get_tools
+    from lit_tools import get_tools, get_permissions, call_tool
 
-__all__ = ["get_tools"]
+__all__ = ["get_tools", "get_permissions", "call_tool"]

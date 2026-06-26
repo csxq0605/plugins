@@ -5,8 +5,8 @@ unified findings format, health scoring, and iterative fix loop.
 """
 
 try:
-    from .review_tools import get_tools
+    from .review_tools import get_tools, get_permissions, call_tool
 except ImportError:
-    from review_tools import get_tools
+    from review_tools import get_tools, get_permissions, call_tool
 
-__all__ = ["get_tools"]
+__all__ = ["get_tools", "get_permissions", "call_tool"]

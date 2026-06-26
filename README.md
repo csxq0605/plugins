@@ -1,80 +1,84 @@
-# plugins
+# Claude Code & Nexgent Plugins
 
-Claude Code & Nexgent 插件集合。
+A collection of independent plugins for Claude Code and Nexgent, designed for multi-agent workflows and enhanced developer productivity.
 
-## 插件列表
+## Plugins
 
-| 插件 | Claude Code | Nexgent | 说明 |
-|------|-------------|---------|------|
-| [team-coord](./multi-agent/) | [claude-code-plugin](./multi-agent/claude-code-plugin/) | [nexgent-plugin](./multi-agent/nexgent-plugin/) | 多 agent 团队协调 |
-| [adversarial-review](./adversarial-review/) | [claude-code-plugin](./adversarial-review/claude-code-plugin/) | [nexgent-plugin](./adversarial-review/nexgent-plugin/) | 多视角代码审查 |
-| [lit-review](./lit-review/) | [claude-code-plugin](./lit-review/claude-code-plugin/) | [nexgent-plugin](./lit-review/nexgent-plugin/) | 科研文献调研 |
+### team-coord
+Two subskills for agent team coordination — lead orchestrates (pure coordinator), teammate guides each worker. Covers inbox sync, WHAT vs HOW spawn, unified reports.
 
-## 目录结构
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
 
-每个插件遵循统一结构：
+### adversarial-review
+Multi-perspective code review with 6 analysis lenses (security, performance, architecture, code quality, test quality, API design), unified findings format, health scoring (0-100), and iterative fix loop.
 
-```
-plugins/
-├── multi-agent/
-│   ├── claude-code-plugin/    ← Claude Code 版本（纯 SKILL.md）
-│   └── nexgent-plugin/        ← Nexgent 版本（Python 工具 + SKILL.md）
-├── adversarial-review/
-│   ├── claude-code-plugin/    ← Claude Code 版本
-│   └── nexgent-plugin/        ← Nexgent 版本
-└── lit-review/
-    ├── claude-code-plugin/    ← Claude Code 版本
-    └── nexgent-plugin/        ← Nexgent 版本
-```
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
 
-## 安装
+### lit-review
+Systematic literature review pipeline — multi-source academic search (arXiv, Semantic Scholar), citation network analysis, subtopic decomposition, and structured review synthesis.
+
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
+
+### project-onboarding
+Automated project onboarding — scans structure, tech stack, build system, test framework, CI/CD, code style, and generates structured onboarding docs. 7 detection tools for comprehensive project analysis.
+
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
+
+### dep-audit
+Dependency vulnerability audit — scans dependency files (npm, PyPI, crates.io, Go, Maven), queries OSV vulnerability database, detects outdated packages, flags license risks, and generates structured audit reports with health scoring.
+
+- **Claude Code**: `claude-code-plugin/`
+- **Nexgent**: `nexgent-plugin/`
+
+## Installation
 
 ### Claude Code
 
 ```bash
-# 添加 marketplace（一次性）
-/plugin marketplace add csxq0605/plugins
-
-# 安装插件
-/plugin install team-coord@plugins
-/plugin install adversarial-review@plugins
-/plugin install lit-review@plugins
+# Install from GitHub
+claude install-plugin github:csxq0605/plugins
 ```
 
 ### Nexgent
 
 ```bash
-/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
-/plugin install https://github.com/csxq0605/plugins/tree/master/adversarial-review/nexgent-plugin
-/plugin install https://github.com/csxq0605/plugins/tree/master/lit-review/nexgent-plugin
+# Clone and install
+git clone https://github.com/csxq0605/plugins.git
+cd plugins
+
+# Install plugin by copying to Nexgent plugins directory
+cp -r adversarial-review/nexgent-plugin ~/.nexgent/plugins/adversarial-review
+cp -r lit-review/nexgent-plugin ~/.nexgent/plugins/lit-review
+cp -r project-onboarding/nexgent-plugin ~/.nexgent/plugins/project-onboarding
+cp -r dep-audit/nexgent-plugin ~/.nexgent/plugins/dep-audit
 ```
 
-## 插件详情
+## Semantic Scholar API
 
-### team-coord — 多 Agent 团队协调
+The lit-review plugin supports Semantic Scholar for enhanced paper search and citation analysis.
 
-- **Lead**：纯协调者，spawn worker、分配任务、综合结果
-- **Teammate**：执行者，inbox sync 协议避免竞态条件
-- **适配 superpowers**：完整的开发工作流
+### Claude Code Version
 
-### adversarial-review — 多视角代码审查
+Configure via:
+```bash
+python bin/lit-search.py set-key YOUR_API_KEY
+```
 
-6 个审查视角：Security / Performance / Architecture / Code Quality / Test Quality / API Design
+### Nexgent Version
 
-- 健康评分 0-100
-- 统一发现格式（JSON）
-- 支持 SARIF 导出（GitHub Code Scanning）
-- Nexgent 版本：6 个工具
+Configure via environment variable or config file:
+```bash
+export SEMANTIC_SCHOLAR_API_KEY=YOUR_API_KEY
+```
 
-### lit-review — 科研文献调研
+Config is stored at `~/.lit-review/config.json` and shared between both versions.
 
-3 个子技能：search / analyze / synthesize
+## Development
 
-- arXiv API + Semantic Scholar API 真实接入
-- 引用网络分析（citations / references / recommendations）
-- 本地论文工作区管理
-- Nexgent 版本：14 个工具
-
-## License
-
-MIT
+Each plugin follows the dual-version structure:
+- `plugin-name/claude-code-plugin/` — Pure SKILL.md files for Claude Code
+- `plugin-name/nexgent-plugin/` — Python tools + SKILL.md for Nexgent

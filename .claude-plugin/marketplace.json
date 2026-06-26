@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "plugins",
-  "description": "Claude Code & Nexgent plugin collection — team coordination, multi-perspective code review, and systematic literature review.",
+  "description": "Claude Code & Nexgent plugin collection — team coordination, multi-perspective code review, systematic literature review, project onboarding, and dependency audit.",
   "owner": {
     "name": "csxq0605"
   },
@@ -32,6 +32,24 @@
       },
       "category": "research",
       "source": "./lit-review/claude-code-plugin"
+    },
+    {
+      "name": "project-onboarding",
+      "description": "Automated project onboarding — scans structure, tech stack, build system, test framework, CI/CD, code style, and generates structured onboarding docs.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "developer-experience",
+      "source": "./project-onboarding/claude-code-plugin"
+    },
+    {
+      "name": "dep-audit",
+      "description": "Dependency vulnerability audit — scans dependency files, checks OSV vulnerability database, detects outdated packages, flags license risks, and generates structured audit reports.",
+      "author": {
+        "name": "csxq0605"
+      },
+      "category": "security",
+      "source": "./dep-audit/claude-code-plugin"
     }
   ]
 }

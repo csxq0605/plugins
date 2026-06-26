@@ -1,0 +1,12 @@
+{
+  "name": "project-onboarding",
+  "version": "1.0.0",
+  "description": "Automated project onboarding plugin for Nexgent — scans structure, tech stack, build system, test framework, CI/CD, code style, and generates structured onboarding docs.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

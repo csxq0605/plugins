@@ -1,0 +1,12 @@
+{
+  "name": "dep-audit",
+  "version": "1.0.0",
+  "description": "Dependency vulnerability audit plugin for Nexgent — scans dependency files, checks OSV vulnerability database, detects outdated packages, flags license risks, and generates structured audit reports.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

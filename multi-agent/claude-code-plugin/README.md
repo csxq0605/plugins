@@ -10,7 +10,7 @@
 ## 安装
 
 ```bash
-/plugin install https://github.com/csxq0605/multi-agent/tree/master/claude-code-plugin
+/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/claude-code-plugin
 ```
 
 ## 插件定位：补充层

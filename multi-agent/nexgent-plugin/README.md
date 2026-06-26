@@ -10,7 +10,7 @@ Nexgent 插件，提供多 agent 团队协调能力——作为 subagent 和 wor
 
 ```bash
 # 在 Nexgent 交互界面中执行：
-/plugin install https://github.com/csxq0605/multi-agent/tree/master/nexgent-plugin
+/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/nexgent-plugin
 ```
 
 ## 工具列表
@@ -39,5 +39,5 @@ python -m pytest tests/ -v
 
 # E2E 测试
 cd D:/tasks/project/Nexgent/nexgent
-python D:/tasks/project/multi-agent/nexgent-plugin/tests/test_real_auto_team.py
+python D:/tasks/project/multi-agent/multi-agent/nexgent-plugin/tests/test_real_auto_team.py
 ```

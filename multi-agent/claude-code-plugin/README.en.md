@@ -10,7 +10,7 @@ Plus optional reference docs for layering the `superpowers` development workflow
 ## Installation
 
 ```bash
-/plugin install team-coord@D:\tasks\project\multi-agent\claude-code-plugin
+/plugin install https://github.com/csxq0605/plugins/tree/master/multi-agent/claude-code-plugin
 ```
 
 ## Plugin Positioning: Supplement Layer

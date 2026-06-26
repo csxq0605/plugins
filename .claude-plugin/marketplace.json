@@ -13,7 +13,7 @@
         "name": "csxq0605"
       },
       "category": "productivity",
-      "source": "./claude-code-plugin"
+      "source": "./multi-agent/claude-code-plugin"
     }
   ]
 }

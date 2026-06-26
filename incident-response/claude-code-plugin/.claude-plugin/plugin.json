@@ -1,0 +1,19 @@
+{
+  "name": "incident-response",
+  "description": "Structured incident response workflow — triage, diagnose, fix, verify, postmortem. Timeline tracking, root cause analysis, and automated postmortem generation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "csxq0605"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/csxq0605/plugins",
+  "repository": "https://github.com/csxq0605/plugins",
+  "keywords": [
+    "incident-response",
+    "postmortem",
+    "triage",
+    "root-cause",
+    "devops",
+    "sre"
+  ]
+}

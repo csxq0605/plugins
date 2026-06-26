@@ -1,0 +1,12 @@
+{
+  "name": "incident-response",
+  "version": "1.0.0",
+  "description": "Structured incident response for Nexgent — triage, diagnose, fix, verify, postmortem. Timeline tracking, root cause analysis, and automated postmortem generation.",
+  "entry": "__init__",
+  "requires": [],
+  "tools": true,
+  "skills": true,
+  "agents": false,
+  "hooks": false,
+  "enabled": true
+}

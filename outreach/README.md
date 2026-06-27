@@ -152,7 +152,7 @@ outreach/
 /outreach "这是我的CV"
 
 # 调研教授
-/outreach "调研 MIT CS"
+/outreach "调研 MIT CS All professors"
 
 # 生成报告
 /outreach "生成报告 MIT CS"

@@ -32,8 +32,8 @@ claude install-plugin github:csxq0605/plugins
 
 ## 配置文件
 
-配置保存在 `~/.email/config.json`。
+配置保存在 `~/.email/email_config.json`（用户级，跨项目共享）。
 
 ## 日志文件
 
-发送记录保存在 `~/.email/logs/` 目录。
+发送记录保存在 `.email/logs/` 目录（项目级）。运行脚本时需传 `--path` 参数指定项目根目录。

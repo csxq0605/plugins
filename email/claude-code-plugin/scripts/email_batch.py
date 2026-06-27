@@ -19,12 +19,19 @@ CONFIG_FILE = Path.home() / ".email" / "email_config.json"
 # 日志默认放在当前目录/.email/logs/ (项目级)
 # 可通过 --path 参数指定其他位置
 DEFAULT_LOGS_DIR = Path.cwd() / ".email" / "logs"
+DEFAULT_SCHOOLS_DIR = Path.cwd() / ".email" / "schools"
 
 def get_logs_dir(path=None):
     """获取日志目录，优先使用指定路径，否则用当前目录"""
     if path:
         return Path(path).resolve() / ".email" / "logs"
     return DEFAULT_LOGS_DIR
+
+def get_schools_dir(path=None):
+    """获取学校数据目录，优先使用指定路径，否则用当前目录"""
+    if path:
+        return Path(path).resolve() / ".email" / "schools"
+    return DEFAULT_SCHOOLS_DIR
 
 
 def load_config():
@@ -128,8 +135,8 @@ def main():
     if args.dry_run:
         print("🔍 DRY RUN 模式\n")
 
-    # 检查是否有邮件草稿目录
-    email_drafts_dir = Path.home() / ".email" / "schools"
+    # 检查是否有邮件草稿目录（项目级路径）
+    email_drafts_dir = get_schools_dir(args.path)
 
     results = {"success": 0, "failed": 0}
 

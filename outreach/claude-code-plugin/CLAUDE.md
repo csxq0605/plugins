@@ -44,9 +44,10 @@ claude install-plugin github:csxq0605/plugins
 
 ## 配置文件
 
-- 邮箱配置: `~/.outreach/email_config.json`
-- 调研数据: `~/.outreach/schools/`
-- 个人材料: `~/.outreach/profiles/`
+- 邮箱配置: `~/.outreach/email_config.json`（用户级，跨项目共享）
+- 调研数据: `.outreach/schools/`（项目级）
+- 个人材料: `.outreach/profiles/`（项目级）
+- 发送日志: `.outreach/logs/`（项目级）
 
 ## 与 Email 插件的关系
 

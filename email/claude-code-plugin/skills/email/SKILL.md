@@ -69,14 +69,14 @@ python scripts/email_setup.py --info
 
 ```bash
 # 发送单封邮件
-python scripts/email_send.py --to recipient@example.com --subject "Subject" --body "Body"
+python scripts/email_send.py --path . --to recipient@example.com --subject "Subject" --body "Body"
 
 # 试运行
-python scripts/email_send.py --to recipient@example.com --subject "Subject" --body "Body" --dry-run
+python scripts/email_send.py --path . --to recipient@example.com --subject "Subject" --body "Body" --dry-run
 
 # 批量发送
-python scripts/email_batch.py --csv recipients.csv --delay 30
-python scripts/email_batch.py --csv recipients.csv --delay 30 --dry-run
+python scripts/email_batch.py --path . --csv recipients.csv --delay 30
+python scripts/email_batch.py --path . --csv recipients.csv --delay 30 --dry-run
 ```
 
 ### 查看邮件
@@ -97,7 +97,7 @@ python scripts/email_list.py --read 123
 
 ## 配置文件
 
-配置保存在 `~/.email/config.json`，格式：
+配置保存在 `~/.email/email_config.json`（用户级，跨项目共享），格式：
 
 ```json
 {
@@ -114,7 +114,7 @@ python scripts/email_list.py --read 123
 
 ## 日志文件
 
-发送记录保存在 `~/.email/logs/` 目录。
+发送记录保存在 `.email/logs/` 目录（项目级）。运行脚本时需传 `--path .` 参数。
 
 ## 用户交互指令
 

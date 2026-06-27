@@ -21,7 +21,7 @@ python scripts/email_setup.py --test
 /outreach "这是我的CV"
 ```
 
-Files are stored in `~/.outreach/inbox/`
+Files are stored in `.outreach/inbox/` (project-level)
 
 ### Professor Research
 
@@ -30,7 +30,7 @@ Files are stored in `~/.outreach/inbox/`
 /outreach "调研 MIT CS --direction AI,NLP"
 ```
 
-Research reports are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/research.md`
+Research reports are saved to `.outreach/schools/{School}_{Dept}/{Prof_Name}/research.md` (project-level)
 
 ### Report Generation
 
@@ -38,7 +38,7 @@ Research reports are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/r
 /outreach "生成报告 MIT CS"
 ```
 
-HTML reports are saved to `~/.outreach/schools/{School}_{Dept}/report.html`
+HTML reports are saved to `.outreach/schools/{School}_{Dept}/report.html` (project-level)
 
 ### Email Generation
 
@@ -47,7 +47,7 @@ HTML reports are saved to `~/.outreach/schools/{School}_{Dept}/report.html`
 /outreach "生成邮件 MIT CS --prof Smith"
 ```
 
-Email drafts are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/email_draft.md`
+Email drafts are saved to `.outreach/schools/{School}_{Dept}/{Prof_Name}/email_draft.md` (project-level)
 
 ### Email Sending
 
@@ -61,8 +61,15 @@ Email drafts are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/email
 
 ## Directory Structure
 
+**Config** (user-level, `~/.outreach/`):
 ```
 ~/.outreach/
+└── email_config.json   # Email configuration
+```
+
+**Task files** (project-level, `<project>/.outreach/`):
+```
+.outreach/
 ├── inbox/              # Uploaded files
 ├── profiles/           # Parsed materials
 ├── schools/
@@ -74,7 +81,6 @@ Email drafts are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/email
 │       └── {Prof_Name}/
 │           ├── research.md
 │           └── email_draft.md
-├── email_config.json   # Email configuration
 └── logs/               # Send logs
 ```
 
@@ -98,4 +104,4 @@ Email drafts are saved to `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/email
 | Email not configured | `/outreach "配置邮箱"` |
 | PDF parsing failed | Ask user for text version |
 | Research failed | Retry or skip professor |
-| Send failed | Check logs in `~/.outreach/logs/` |
+| Send failed | Check logs in `.outreach/logs/` |

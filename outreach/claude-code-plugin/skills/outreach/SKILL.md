@@ -40,10 +40,12 @@ allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 
 ## 工作目录
 
-所有文件存储在 `~/.outreach/` 目录：
+**配置文件**（用户级，跨项目共享）存储在 `~/.outreach/`：
+- `~/.outreach/email_config.json` — 邮箱配置（密码等敏感信息）
 
+**任务文件**（项目级，每个项目独立）存储在项目根目录的 `.outreach/`：
 ```
-~/.outreach/
+.outreach/
 ├── inbox/              # 用户上传的原始文件（CV、研究计划等）
 ├── profiles/           # 解析后的个人材料（Markdown格式）
 ├── schools/
@@ -54,11 +56,11 @@ allowed-tools: Bash(python*), Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 │       │   ├── research.md   # 详细调研报告
 │       │   └── email_draft.md # 邮件草稿
 │       └── ...
-├── scripts/
-│   └── pipeline.py     # 自动化脚本
 ├── logs/               # 发送日志
 └── templates/          # 报告模板
 ```
+
+**重要**：运行脚本时必须传 `--path` 参数指定项目根目录，确保数据写入项目级路径。
 
 ## 参数解析
 
@@ -91,7 +93,7 @@ python scripts/email_setup.py --email your_name@gmail.com --password your_passwo
 python scripts/email_setup.py --test
 ```
 
-配置保存在 `~/.outreach/email_config.json`，配置一次后永久有效。
+配置保存在 `~/.outreach/email_config.json`（用户级，跨项目共享），配置一次后永久有效。
 
 **配置完成后会自动测试连接，失败会返回具体错误信息。**
 
@@ -215,7 +217,7 @@ semantic-scholar__author_papers(author_id="作者ID", limit=50)
 
 #### 2.3 保存调研结果
 
-每位教授的调研结果保存为 `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/research.md`
+每位教授的调研结果保存为 `.outreach/schools/{School}_{Dept}/{Prof_Name}/research.md`（项目级）
 
 ### 阶段 3: 生成可视化报告
 
@@ -228,7 +230,7 @@ semantic-scholar__author_papers(author_id="作者ID", limit=50)
    - 外置 `assets/style.css`
    - 浮动目录、callout、keynum、长文分层阅读
    - 搜索/导航卡片入口
-3. 保存为 `~/.outreach/schools/{School}_{Dept}/report.html`，并同步生成每位教授独立页
+3. 保存为 `.outreach/schools/{School}_{Dept}/report.html`，并同步生成每位教授独立页
 4. 告知用户报告路径，可直接在浏览器打开
 
 ### 阶段 4: 生成邮件
@@ -243,7 +245,7 @@ semantic-scholar__author_papers(author_id="作者ID", limit=50)
    - 提及教授具体研究（引用论文/项目）
    - 突出用户最相关的经历
    - 语气专业真诚
-4. 保存为 `~/.outreach/schools/{School}_{Dept}/{Prof_Name}/email_draft.md`
+4. 保存为 `.outreach/schools/{School}_{Dept}/{Prof_Name}/email_draft.md`
 5. 展示邮件草稿供用户审核
 
 ## 输出格式规范
@@ -327,22 +329,22 @@ Best regards,
 
 ```bash
 # 解析材料
-python scripts/pipeline.py setup
+python scripts/pipeline.py --path . setup
 
 # 全量扫描学院教授
-python scripts/pipeline.py scan --school MIT --dept CS
+python scripts/pipeline.py --path . scan --school MIT --dept CS
 
 # 深度调研高匹配教授
-python scripts/pipeline.py research --school MIT --dept CS
+python scripts/pipeline.py --path . research --school MIT --dept CS
 
 # 生成报告
-python scripts/pipeline.py report --school MIT --dept CS
+python scripts/pipeline.py --path . report --school MIT --dept CS
 
 # 生成邮件
-python scripts/pipeline.py email --school MIT --dept CS --all --dry-run
+python scripts/pipeline.py --path . email --school MIT --dept CS --all --dry-run
 
 # 全流程
-python scripts/pipeline.py full --school MIT --dept CS --dry-run
+python scripts/pipeline.py --path . full --school MIT --dept CS --dry-run
 ```
 
 ## 注意事项
@@ -406,18 +408,18 @@ python scripts/email_setup.py --info
 
 ```python
 # 发送单封邮件
-python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body"
+python scripts/email_send.py --path . --to professor@university.edu --subject "Subject" --body "Body"
 
 # 试运行
-python scripts/email_send.py --to professor@university.edu --subject "Subject" --body "Body" --dry-run
+python scripts/email_send.py --path . --to professor@university.edu --subject "Subject" --body "Body" --dry-run
 
 # 批量发送
-python scripts/email_batch.py --csv professors.csv --delay 30
+python scripts/email_batch.py --path . --csv professors.csv --delay 30
 ```
 
 ### 邮件日志
 
-所有发送记录保存在 `~/.outreach/logs/` 目录，格式：
+所有发送记录保存在 `.outreach/logs/` 目录（项目级），格式：
 
 ```
 ---

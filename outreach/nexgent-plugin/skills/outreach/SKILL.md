@@ -116,9 +116,25 @@ outreach_parse_materials(
 outreach_list_profiles()
 ```
 
+### 2.5 全量扫描学院教授（关键步骤！）
+
+**必须先调用 outreach_scan_faculty 获取完整教授列表，再进行深度调研。**
+
+原则：先全量扫描，再深度调研。不能直接用关键词搜索教授然后只调研搜到的。
+
+```python
+outreach_scan_faculty(
+    school="MIT",
+    dept="CS",
+    faculty_url="https://www.cs.mit.edu/people/faculty/"
+)
+```
+
+这会自动：获取完整教授列表 → 批量抓取个人页研究方向 → 匹配度筛选分级 → 保存全部教授到 CSV
+
 ### 3. 调研教授
 
-为指定教授创建调研报告：
+为 Tier 1/2 的高匹配教授创建深度调研报告：
 
 ```
 outreach_research_professor(

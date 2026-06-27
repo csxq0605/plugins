@@ -123,10 +123,35 @@ python scripts/email_setup.py --test
 - 直接读取用户上传的 CSV 文件
 - 格式：`name,school,email,homepage,department,research_keywords,notes`
 
-**方式 B - 自动搜索**：
-- 使用 WebSearch 搜索学院官网获取教授列表
-- 优先匹配用户研究方向相关的教授
-- 生成 CSV 并保存
+**方式 B - 全量扫描（推荐，默认）**：
+
+> 这是整个调研最关键的一步，不能跳过或简化。
+> 原则：先全量扫描，再深度调研。绝对不能直接用关键词搜索教授然后只调研搜到的。
+
+##### B1. 获取学院完整 Faculty 列表
+
+1. 定位学院 faculty 目录页（常见 URL: /people/faculty/、/people/、/faculty/）
+2. 用 Python urllib 抓取页面 HTML，提取全部教授的 slug/URL
+3. 技巧: ?format=raw、查找 script 中的 JSON(filterPagination)、正则匹配链接
+
+##### B2. 批量抓取教授个人页
+
+对每位教授的个人页提取: 姓名、职称、邮箱、研究方向。每请求间隔 0.3s。
+
+##### B3. 匹配度筛选
+
+与用户档案对照，分四层:
+- Tier 1: 直接匹配 (agent, memory, embodied, LLM, robotics) -> 必须深度调研
+- Tier 2: 高度相关 (CV, deep learning, multimodal, generative) -> 建议深度调研
+- Tier 3: 部分相关 (trustworthy AI, federated learning) -> 可选
+- Tier 4: 不相关 (database, systems, theory, VLSI) -> 跳过
+
+##### B4. 保存 CSV 并汇报
+
+全部教授（含 Tier 4）保存到 professors.csv，只对 Tier 1+2 做深度调研。
+向用户汇报学院教授总数、匹配数量和各 Tier 分布。
+
+**方式 A - 用户提供 CSV**：跳过 B1-B3，直接读取用户上传的 CSV
 
 #### 2.2 逐个深度调研
 
@@ -304,7 +329,10 @@ Best regards,
 # 解析材料
 python scripts/pipeline.py setup
 
-# 调研教授
+# 全量扫描学院教授
+python scripts/pipeline.py scan --school MIT --dept CS
+
+# 深度调研高匹配教授
 python scripts/pipeline.py research --school MIT --dept CS
 
 # 生成报告

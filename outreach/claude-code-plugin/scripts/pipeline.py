@@ -808,6 +808,15 @@ def main():
     # setup: 
     sub.add_parser("setup", help=" inbox/ Personal materials")
 
+    # scan: Full faculty scan (NEW - get complete professor list first)
+    p_sc = sub.add_parser("scan", help="Full scan: get complete faculty list + batch fetch interests")
+    p_sc.add_argument("--school", required=True)
+    p_sc.add_argument("--dept", required=True)
+    p_sc.add_argument("--url", help="Faculty directory URL")
+    p_sc.add_argument("--csv", help="User-provided CSV (skip auto-scan)")
+    p_sc.add_argument("--direction", help="Focus direction (comma separated)")
+    p_sc.add_argument("--delay", type=float, default=0.3, help="Request delay in seconds")
+
     # research: ResearchProfessor
     p_r = sub.add_parser("research", help="ResearchProfessor")
     p_r.add_argument("--school", required=True)

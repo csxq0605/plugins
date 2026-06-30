@@ -2,6 +2,28 @@
 
 ## 5 分钟快速上手
 
+### Codex 用户
+
+```text
+# 1. 配置邮箱（首次使用会自动检测并引导）
+用 outreach 配置邮箱
+
+# 2. 上传你的CV
+用 outreach 解析我的 CV
+
+# 3. 调研目标学校的教授
+用 outreach 调研 MIT CS
+
+# 4. 生成可视化报告
+用 outreach 生成报告 MIT CS
+
+# 5. 生成套磁邮件
+用 outreach 生成邮件 MIT CS
+
+# 6. 发送邮件
+用 outreach 发送邮件给 MIT CS Kaiming_He
+```
+
 ### Claude Code 用户
 
 ```bash
@@ -111,6 +133,20 @@ email_send(
 
 ## 文件位置
 
+### Codex 版本
+```
+plugins/outreach/codex-plugin/
+├── .codex-plugin/plugin.json   # Codex 插件配置
+├── skills/outreach/SKILL.md    # Skill 定义
+├── scripts/
+│   ├── pipeline.py             # 调研自动化脚本
+│   ├── email_setup.py          # 邮箱配置脚本
+│   ├── email_send.py           # 邮件发送脚本
+│   ├── email_batch.py          # 批量发送脚本
+│   └── email_list.py           # 邮件查看脚本
+└── templates/                  # 报告模板
+```
+
 ### Claude Code 版本
 ```
 plugins/outreach/claude-code-plugin/
@@ -149,6 +185,23 @@ plugins/outreach/nexgent-plugin/
 ```
 
 ## 常用命令速查
+
+### Codex
+
+| 用户请求 | 说明 |
+|------|------|
+| `用 outreach 配置邮箱` | 配置邮箱（自动测试连接） |
+| `用 outreach 查看邮箱配置` | 查看当前邮箱配置 |
+| `用 outreach 测试邮箱` | 测试邮箱连接 |
+| `用 outreach 解析我的 CV` | 上传材料 |
+| `用 outreach 调研 MIT CS` | 调研教授 |
+| `用 outreach 调研 MIT CS --direction AI` | 按方向调研 |
+| `用 outreach 生成报告 MIT CS` | 生成HTML报告 |
+| `用 outreach 生成邮件 MIT CS` | 生成邮件草稿 |
+| `用 outreach 查看 MIT CS Prof_Name` | 查看调研结果 |
+| `用 outreach 发送邮件给 MIT CS Prof_Name` | 发送套磁邮件 |
+| `用 outreach 批量发送 MIT CS` | 批量发送邮件 |
+| `用 outreach 查看收件箱` | 查看邮件列表 |
 
 ### Claude Code
 

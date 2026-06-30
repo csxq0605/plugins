@@ -1,0 +1,41 @@
+{
+  "name": "outreach",
+  "version": "1.0.0",
+  "description": "学术套磁全流程自动化：材料解析、教授调研、可视化报告、个性化邮件生成、邮件收发。",
+  "author": {
+    "name": "csxq0605",
+    "url": "https://github.com/csxq0605"
+  },
+  "homepage": "https://github.com/csxq0605/plugins/tree/master/outreach/codex-plugin",
+  "repository": "https://github.com/csxq0605/plugins",
+  "license": "MIT",
+  "keywords": [
+    "outreach",
+    "cold-email",
+    "professor",
+    "research",
+    "graduate-school",
+    "academic"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Outreach",
+    "shortDescription": "自动化学术套磁调研、报告和邮件工作流。",
+    "longDescription": "Outreach helps Codex parse applicant materials, research professors, generate visual HTML reports, draft personalized academic outreach emails, and manage email sending through local scripts.",
+    "developerName": "csxq0605",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/csxq0605/plugins",
+    "defaultPrompt": [
+      "帮我配置 outreach 邮箱",
+      "帮我调研 MIT CS 的教授",
+      "为调研结果生成套磁邮件"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

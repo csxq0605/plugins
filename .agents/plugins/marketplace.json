@@ -1,0 +1,20 @@
+{
+  "name": "csxq0605-plugins",
+  "interface": {
+    "displayName": "csxq0605 Plugins"
+  },
+  "plugins": [
+    {
+      "name": "outreach",
+      "source": {
+        "source": "local",
+        "path": "./outreach/codex-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

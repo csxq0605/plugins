@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TOPIC}} — 套磁调研索引</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="hero">
+  <h1>{{TOPIC_DISPLAY_NAME}}</h1>
+  <p>{{TOPIC_SUBTITLE}}</p>
+</div>
+
+<div class="section-title">学院概览</div>
+<div class="card-grid">
+  <div class="card">
+    <span class="tag">Overview</span>
+    <h3>{{TOPIC_DISPLAY_NAME}}</h3>
+    <p>{{TOPIC_SUMMARY}}</p>
+    <div class="venue">{{META_LINE}}</div>
+  </div>
+</div>
+
+<div class="section-title">教授调研</div>
+<div class="card-grid">
+{{CARDS}}
+</div>
+
+</body>
+</html>

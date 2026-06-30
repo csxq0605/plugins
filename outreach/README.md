@@ -1,8 +1,19 @@
 # 🎓 Outreach Plugin — 学术套磁全流程自动化
 
-一套完整的学术套磁自动化工具，支持 Claude Code 和 Nexgent 两个平台。
+一套完整的学术套磁自动化工具，支持 Codex、Claude Code 和 Nexgent 三个平台。
 
 ## 安装
+
+### Codex
+
+在仓库根目录运行：
+
+```bash
+codex plugin marketplace add .
+codex plugin add outreach@csxq0605-plugins
+```
+
+Windows PowerShell 若因执行策略拦截 `codex.ps1`，可改用 `codex.cmd`。
 
 ### Claude Code
 
@@ -63,6 +74,13 @@ export SEMANTIC_SCHOLAR_API_KEY=your_key_here
 
 ```
 outreach/
+├── codex-plugin/              # Codex 插件
+│   ├── .codex-plugin/plugin.json
+│   ├── README.md
+│   ├── scripts/
+│   ├── skills/outreach/
+│   │   └── SKILL.md
+│   └── templates/
 ├── claude-code-plugin/        # Claude Code 插件
 │   ├── .claude-plugin/plugin.json
 │   ├── CLAUDE.md
@@ -141,6 +159,28 @@ outreach/
 ```
 
 ## 使用方式
+
+### Codex
+
+```text
+# 配置邮箱
+用 outreach 配置邮箱
+
+# 上传材料
+用 outreach 解析我的 CV
+
+# 调研教授
+用 outreach 调研 MIT CS All professors
+
+# 生成报告
+用 outreach 生成报告 MIT CS
+
+# 生成邮件
+用 outreach 生成邮件 MIT CS
+
+# 发送邮件
+用 outreach 发送邮件给 MIT CS Professor_Name
+```
 
 ### Claude Code
 

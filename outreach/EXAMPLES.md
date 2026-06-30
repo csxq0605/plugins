@@ -4,6 +4,33 @@
 
 **使用此插件前，必须先配置邮箱。插件会在用户首次使用时主动询问并引导配置。**
 
+## Codex 使用示例
+
+### 示例 1：首次使用完整流程
+
+```text
+# 1. 配置邮箱（首次使用必须）
+用 outreach 配置邮箱
+
+# 2. 上传你的CV
+用 outreach 解析我的 CV，并帮我调研 MIT CS 的教授
+
+# 3. 查看已解析的材料
+用 outreach 查看我的材料
+
+# 4. 调研特定方向的教授
+用 outreach 调研 MIT CS 的 AI 方向教授
+
+# 5. 生成报告
+用 outreach 生成报告 MIT CS
+
+# 6. 为所有教授生成邮件
+用 outreach 生成邮件 MIT CS
+
+# 7. 发送邮件
+用 outreach 发送邮件给 MIT CS Kaiming_He
+```
+
 ## Claude Code 使用示例
 
 ### 示例 1：首次使用完整流程

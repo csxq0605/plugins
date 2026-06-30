@@ -6,14 +6,31 @@
 
 ### Codex
 
-在仓库根目录运行：
+在 Codex App 的插件市场页面添加 GitHub marketplace，不需要 clone 本仓库，也不需要填写本地路径：
+
+```text
+Marketplace source: csxq0605/plugins
+Ref: master
+Sparse paths:
+  .agents
+  outreach/codex-plugin
+```
+
+添加后安装插件：
+
+```text
+Marketplace: csxq0605-plugins
+Plugin: outreach
+```
+
+命令行等价方式：
 
 ```bash
-codex plugin marketplace add .
+codex plugin marketplace add csxq0605/plugins --ref master --sparse .agents --sparse outreach/codex-plugin
 codex plugin add outreach@csxq0605-plugins
 ```
 
-Windows PowerShell 若因执行策略拦截 `codex.ps1`，可改用 `codex.cmd`。
+Windows PowerShell 若因执行策略拦截 `codex.ps1`，可将命令中的 `codex` 改为 `codex.cmd`。
 
 ### Claude Code
 

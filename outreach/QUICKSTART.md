@@ -2,6 +2,27 @@
 
 ## 5 分钟快速上手
 
+### Codex 安装
+
+在 Codex App 的插件市场页面添加 GitHub marketplace：
+
+```text
+Marketplace source: csxq0605/plugins
+Ref: master
+Sparse paths:
+  .agents
+  outreach/codex-plugin
+```
+
+然后安装 `outreach` 插件：
+
+```text
+Marketplace: csxq0605-plugins
+Plugin: outreach
+```
+
+不需要 clone 仓库，也不需要填写本地路径。安装后重新开启一个 Codex 对话。
+
 ### Codex 用户
 
 ```text
